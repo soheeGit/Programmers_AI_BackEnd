@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .box1 {
+        width: 200px;
+        height: 100px;
+        background-color: lightblue;
+        margin-right: 10px;
+        float: left;
+      }
+      .box2 {
+        width: 200px;
+        height: 100px;
+        background-color: lightgreen;
+        margin-right: 10px;
+        float: left;
+      }
+      .box3 {
+        /* 직접해도 되고 */
+        /* clear: both; */
+        clear: both;
+        width: 100%;
+        height: 100px;
+        background-color: lightcoral;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- div.box1{박스 1}+div.box2{박스 2}+div.box3{박스 3} -->
+    <div class="box1">박스 1</div>
+    <div class="box2">박스 2</div>
+    <!-- float가 붙지 않게 clear를 끼워넣을 수도 있다. -->
+    <div style="clear: both"></div>
+    <div class="box3">박스 3</div>
+  </body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flex(Flexbox)</title>
+    <style>
+      img {
+        width: 100px;
+      }
+      .flex-container {
+        display: flex;
+        flex-direction: row;
+      }
+      .flex-item {
+        /* 이건 flex 기능이 아니라 시각적 표현 */
+        background-color: yellow;
+        border: 1px solid black;
+        width: 100px;
+        height: 100px;
+      }
+      .row {
+        flex-direction: row;
+      }
+      .column {
+        flex-direction: column;
+      }
+      .row.reverse {
+        flex-direction: row-reverse;
+      }
+      .column.reverse {
+        flex-direction: column-reverse;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <p style="margin: 0 40px; text-align: center">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis cupiditate
+        voluptatem tempore, suscipit, iusto odit laudantium commodi sint nulla
+        quisquam ipsa modi culpa qui, repudiandae laborum rerum unde dolorum
+        ipsum.
+      </p>
+      <div style="text-align: center">
+        <img src="htmlimg.png" alt="html이미지" />
+      </div>
+      <div>
+        <img
+          style="display: block; margin: 0 auto"
+          src="htmlimg.png"
+          alt="html이미지"
+        />
+      </div>
+      <!-- position, ... 여러 가지 정렬 관련... -->
+      <!-- 1. 가로는 괜찮아... 세로축에 대한 정렬이 진짜 어려워... -->
+      <!-- 2. 하위 요소 간의 관계에 대한 정의가 어려움 -->
+      <!-- 컨테이너와 아이템 관계가 어려움 -->
+    </div>
+    <div class="flex-container">
+      <div class="flex-item">1</div>
+      <div class="flex-item">2</div>
+      <div class="flex-item">3</div>
+      <div class="flex-item">4</div>
+      <div class="flex-item">5</div>
+    </div>
+    <div class="flex-container row">
+      <div class="flex-item">1</div>
+      <div class="flex-item">2</div>
+      <div class="flex-item">3</div>
+      <div class="flex-item">4</div>
+      <div class="flex-item">5</div>
+    </div>
+    <div class="flex-container row reverse">
+      <div class="flex-item">1</div>
+      <div class="flex-item">2</div>
+      <div class="flex-item">3</div>
+      <div class="flex-item">4</div>
+      <div class="flex-item">5</div>
+    </div>
+    <div class="flex-container column">
+      <div class="flex-item">1</div>
+      <div class="flex-item">2</div>
+      <div class="flex-item">3</div>
+      <div class="flex-item">4</div>
+      <div class="flex-item">5</div>
+    </div>
+    <div class="flex-container column reverse">
+      <div class="flex-item">1</div>
+      <div class="flex-item">2</div>
+      <div class="flex-item">3</div>
+      <div class="flex-item">4</div>
+      <div class="flex-item">5</div>
+    </div>
+    <!-- div.flex-container>div.flex-item*3 -->
+    <div
+      class="flex-container"
+      style="
+        height: 500px;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 2px;
+      "
+    >
+      <div class="flex-item">1</div>
+      <div class="flex-item">2</div>
+      <div class="flex-item">3</div>
+      <div class="flex-item">3</div>
+      <div class="flex-item">3</div>
+      <div class="flex-item">3</div>
+      <div class="flex-item">3</div>
+      <div class="flex-item">3</div>
+      <div class="flex-item">3</div>
+      <div class="flex-item">3</div>
+      <div class="flex-item">3</div>
+      <div class="flex-item">3</div>
+      <div class="flex-item">3</div>
+      <div class="flex-item">3</div>
+      <div class="flex-item">3</div>
+      <div class="flex-item">3</div>
+    </div>
+    <div
+      style="
+        display: flex;
+        height: 200px;
+        background-color: beige;
+        align-items: center;
+        flex-wrap: wrap-reverse;
+        /* flex-direction: column; */
+      "
+    >
+      <div style="background-color: bisque">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui, maxime
+        odio voluptatum laudantium ullam placeat tempora rem mollitia eaque,
+        modi aut sequi perspiciatis animi cum possimus adipisci atque a
+        provident. Accusamus provident non accusantium alias molestiae corporis
+        ea. Sequi harum modi est odit ab corporis at! Pariatur aperiam tempora
+        expedita cum ullam ratione, labore architecto blanditiis dicta
+        aspernatur quam dignissimos.
+      </div>
+      <div style="background-color: gray">히힛</div>
+    </div>
+  </body>
+</html>

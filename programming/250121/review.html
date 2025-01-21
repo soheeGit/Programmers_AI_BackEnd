@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2025년 1월 21일 복습</title>
+    <style>
+      p {
+        color: lightblue;
+      }
+      .p1 {
+        color: lightgreen;
+      }
+      #p2 {
+        color: lightpink;
+        background-color: pink;
+      }
+      .box {
+        width: 100px;
+        height: 100px;
+        padding: 10px;
+        /* 상 우 좌 하 */
+        margin: 20px 20px 10px 10px;
+        border: 2px solid #86a788;
+      }
+      #box-sizing {
+        box-sizing: border-box;
+      }
+      #content-sizing {
+        box-sizing: content-box;
+      }
+      .float {
+        float: left;
+      }
+    </style>
+  </head>
+  <body>
+    <p style="color: lightcoral">저는 세계 제일의 개발자가 되겠습니다.</p>
+    <div>
+      <p>p 태그 입니다.</p>
+      <p class="p1">p 태그와 클래스 입니다</p>
+      <p id="p2">태그와 아이디 입니다.</p>
+    </div>
+    <!-- div>div.box#box-sizing+div.box#content-sizing -->
+    <div>
+      <div class="box" id="box-sizing"></div>
+      <div class="box" id="content-sizing"></div>
+    </div>
+    <div>
+      <!-- block 요소들 끼리의 float 로직 -->
+      <!-- 한 줄을 다 차지하는 block 요소는 바닥에 깔린다. -->
+      <div class="box float" id="box-sizing"></div>
+      <div class="box float" id="content-sizing"></div>
+      <!-- lorem -->
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Non maxime optio
+      quaerat, corrupti dolore ratione veniam consequatur unde laborum dolor
+      dolorum totam aut? Exercitationem nobis facilis, architecto ipsam mollitia
+      ipsum.
+      <!-- lorem*20 -->
+      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Labore officia
+      reprehenderit nemo ad facilis ducimus sit quaerat assumenda id. Vel
+      laboriosam dolore quam ipsa blanditiis iusto ducimus omnis eum quidem. Qui
+      magnam vitae architecto, voluptatem voluptatibus corporis quam
+      exercitationem porro similique et quidem quo deserunt. Fuga id ad soluta
+      illum, provident, similique cum laborum consequatur illo, in officia sunt
+      modi!
+      <div class="box float" id="box-sizing"></div>
+      <div class="box float" id="content-sizing"></div>
+    </div>
+  </body>
+</html>

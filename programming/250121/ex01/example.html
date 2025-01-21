@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .static {
+        position: static;
+        width: 100px;
+        height: 100px;
+        background-color: lightblue;
+      }
+      .relative {
+        position: relative;
+        top: 10px; /* 요소를 아래로 10px 이동 */
+        left: 20px; /* 요소를 오른쪽으로 20px 이동 */
+        width: 100px;
+        height: 100px;
+        background-color: lightcoral;
+      }
+      .absolute {
+        position: absolute;
+        top: 30px; /* 상단에서 50px 떨어짐 */
+        right: 20px; /* 오른쪽에서 20px 떨어짐 */
+        width: 100px;
+        height: 100px;
+        background-color: lightcyan;
+      }
+      .fixed {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 100px;
+        height: 100px;
+        background-color: lightgray;
+      }
+      .sticky {
+        position: sticky;
+        top: 0;
+        width: 100px;
+        height: 100px;
+        background-color: lightgreen;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="sticky">sticky</div>
+    <div class="static">static</div>
+    <div class="relative">relative</div>
+    <div
+      style="position: relative; height: 200px; background-color: lightsalmon"
+    >
+      <div class="absolute">absolute</div>
+    </div>
+    <div class="fixed">fixed</div>
+  </body>
+</html>

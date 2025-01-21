@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>실습 페이지</title>
+  </head>
+  <body>
+    기본적으로 <br />
+    엔터가 무시
+    <p id="cat" class="question" style="color: red">
+      여러분은 cat person입니까?
+    </p>
+    <p id="dog" class="question">dog person입니까?</p>
+    <!-- 화면에 표시되지 않음 -->
+    <p>제 통장 잔고는 0원입니다.</p>
+    <h1>헤드라인</h1>
+    <h6>가장 작은 것</h6>
+    <span>인라인1</span><span>인라인2</span>
+    <strong>왜 strong은 살아남았는가?</strong>
+    <!-- seo, 구글엔진이 strong을 읽을 수 있기때문에 -->
+    <ul>
+      <li>순서 없는 리스트</li>
+      <li>고양이</li>
+      <li>개</li>
+    </ul>
+    <ol>
+      <li>히레카츠</li>
+      <li>규카츠</li>
+      <li>김치찌개</li>
+      <li>된장찌개</li>
+      <li>오므라이스</li>
+    </ol>
+
+    <a href="out.html">out.html</a>
+    <!--나를 기준으로하는 상대경로 -->
+    <a href="/day02/out.html">/day02/out.html</a>
+    <!--워크스페이스를 기준으로 하는 절대경로-->
+    <a href="https://programmers.co.kr">프로그래머스</a>
+    <a href="https://naver.com">네이버</a>
+
+    <img src="cat.jpg" alt="고양이" />
+    <img
+      src="https://images.unsplash.com/photo-1472491235688-bdc81a63246e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      alt="고양이"
+    />
+
+    <table>
+      <tr>
+        <th>이름</th>
+        <th>나이</th>
+        <th>직업</th>
+      </tr>
+      <tr>
+        <td>김자바</td>
+        <td>25</td>
+        <td>개발자</td>
+      </tr>
+      <tr>
+        <td>박자바</td>
+        <td>27</td>
+        <td>프엔</td>
+      </tr>
+      <tr>
+        <td>이자바</td>
+        <td>30</td>
+        <td>백엔</td>
+      </tr>
+    </table>
+
+    <form action="https://search.naver.com/search.naver" method="get">
+      <label for="query">검색어</label>
+      <input
+        id="query"
+        type="text"
+        name="query"
+        placeholder="검색어를 입력하세요"
+      />
+      <input type="hidden" name="where" value="news" />
+    </form>
+  </body>
+</html>
