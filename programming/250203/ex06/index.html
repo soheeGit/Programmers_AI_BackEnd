@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>기본 동작 방지</title>
+  </head>
+  <body>
+    <a id="what" href="https://programmers.co.kr/">A란 무엇인가</a>
+    <script>
+      const what = document.querySelector("#what");
+      what.addEventListener("click", function (event) {
+        event.preventDefault();
+        console.log(event);
+        location.href = "https://programmers.co.kr/";
+      });
+    </script>
+    <form id="info">
+      <input name="name" type="text" placeholder="이름" />
+      <input name="age" type="number" placeholder="나이" />
+      <input name="job" type="text" placeholder="직업" />
+      <button>제출</button>
+    </form>
+    <script>
+      const infoForm = document.querySelector("#info");
+      infoForm.addEventListener("click", function (event) {
+        event.preventDefault(); // 기본 form의 제출 로직을 회피할 수 있음.
+        console.log(event);
+        const formData = new FormData(infoForm); // name key로 input에 들어간 값이 value인 객체화시켜줌
+        for (const [key, value] of formData.entries()) {
+          console.log(`${key}: ${value}`);
+        }
+      });
+    </script>
+  </body>
+</html>

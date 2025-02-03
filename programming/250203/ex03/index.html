@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM</title>
+    <!-- script => 먼저 로드가 되어야 하는 경우 라이브러리, 의존성에 앞선다던가... -->
+</head>
+<body>
+    <div class="container">
+        <ul>
+            <li id="h1">happy</li>
+            <li id="h2">happy</li>
+            <li id="h3"><strong>{happy}</strong></li>
+            <li id="h4">happy</li>
+            <li id="h5">happy</li>
+        </ul>
+        <ol>
+            <li class="x" id="e1">excited1</li>
+            <li id="e2">excited2</li>
+            <li id="e3">excited3</li>
+            <li id="e4">excited4</li>
+            <li id="e5">excited5</li>
+        </ol>
+    </div>
+    <script>
+        // #h3
+        console.log(document.getElementById("h3"));
+        const h3 = document.getElementById("h3");
+        console.log(h3.innerHTML);
+        console.log(h3.innerText);
+        // h3.innerHTML = "smile";
+        h3.innerHTML = "<strong>smile</strong>";
+        console.log(h3.innerHTML);
+        console.log(h3.innerText);
+        const h4 = document.getElementById("h4");
+        h4.innerText = "<strong>smile</strong>";    // innerText는 태그를 인식하지 않는다. 말그대로 텍스트만 인식
+        console.log(h4.innerHTML);
+        console.log(h4.innerText);
+        const el = document.querySelector("#e3");   // selector는 #id, .class, tagname 등을 사용할 수 있다.
+        console.log(el);
+        const el2 = document.querySelectorAll("#e3");
+        console.log(el2);
+        const el3 = document.querySelector(".x");
+        // const el3 = document.querySelector(".y");    // 없는 클래스를 지칭했으므로 null이 출력된다. 그러므로 typeError가 발생한다.
+        console.log(el3.innerText);
+        const el4 = document.querySelectorAll(".x");
+        console.log(el4.innerText); // undefined 없는 프로퍼티 조회 시.
+        console.log(el4);
+        // Array.from -> NodeList 처럼 Array로 변환될 수 있는 객체를 Array로 만들어주는 유틸리티 메서드입니다
+        console.log(Array.from(el4).map((el) => el.innerText));
+        const el5 = document.querySelectorAll("li");
+        console.log([...el5].map((el) => el.innerText.toUpperCase()));       
+    </script>
+    <!-- script => DOM 요소와 관련이 되어 있거나, 최종적으로 로딩되는 것이 성능상 유리할 경우 -->
+</body>
+</html>

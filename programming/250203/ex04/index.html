@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM 2</title>
+</head>
+<body>
+    <!-- onclick => 함수의 실행, 호출을 집어넣음(html에서는 함수 호출 자체를 집어넣음) -->
+    <button onclick="handleClick()">버튼</button>
+    <script>
+        // 어차피 호이스팅됨 -> 위치는 의미 없음 다만... => 표현식으로 하면 여기두면 안됨
+        function handleClick() {
+            alert("버튼이 클릭되었습니다.");
+        }
+    </script>
+    <div>
+        <button onclick="increase()">늘어나는 버튼</button>
+        <button onclick="decrease()">줄어드는 버튼</button>
+        <button onclick="reset()">없어지는 버튼</button>
+    </div>
+    <style>
+        #container {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 12px;
+          justify-content: center;
+        }
+        #container > div {
+          display: flex;
+          background-color: beige;
+          border-radius: 100%;
+          border: 1px solid black;
+          width: 120px;
+          height: 120px;
+          justify-content: center;
+          align-items: center;
+          text-align: center;
+        }
+      </style>
+      <div id="container"></div>
+      <script>
+        let increaseCounter = 0;
+        const container = document.querySelector("#container");
+        function increase() {
+          // const container = document.querySelector("#container");
+          console.log(container);
+          const textItem = document.createElement("div");
+          textItem.innerHTML = `여러분의 열정<br>${Math.floor(
+            Math.random() * 100
+          )}점`;
+          const item = document.createElement("div");
+          // id 관리
+          item.id = `item-${increaseCounter}`;
+          textItem.id = `textItem-${increaseCounter}`;
+          increaseCounter++;
+          // class 관리
+          item.classList.add("item"); // add, remove
+          textItem.classList.add("textItem");
+          item.appendChild(textItem);
+          container.appendChild(item);
+        }
+        function decrease() {
+          try {
+            container.removeChild(container.lastElementChild);
+          } catch {
+            alert("열정 없음!");
+          }
+        }
+        function reset() {
+          // 관리하는 데이터를 지우던가, 관리하는 화면을 지우던가.
+          // const container = document.querySelector("#/container");
+          container.innerHTML = "";
+        }
+      </script>
+</body>
+</html>

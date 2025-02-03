@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event</title>
+</head>
+<body>
+    <button id="login-btn">로그인 버튼</button>
+    <button id="login-btn2">로그인 버튼2</button>
+    <script>
+        const loginButton = document.querySelector("#login-btn");
+        console.log(loginButton);
+        const loginButton2 = document.querySelector("#login-btn2")
+
+        // 이벤트 타입, 함수객체(익명함수, 화살표함수, 함수이름)
+        // loginButton.addEventListener("click", () => alert("로그인 버튼이 클릭되었습니다."));
+        // 함수 호출() <- 붙이는거 안놓도록 주의! on_와 구별할 것!!
+        const loginHandler = () => alert("로그인 완료!");
+        loginButton.addEventListener("click", loginHandler);
+        loginButton2.addEventListener("click", function(){
+            // add : 추가
+            // 해당 이벤트 리스너가 지워지려면 그 주소(일반적으로 변수명)을 알아야 한다
+            loginButton.removeEventListener("click", loginHandler);
+            for(let i = 0; i<Math.floor(Math.random()*10); i++){
+                // 여러 개의 이벤트 리스너가 들어갈 수 있다.
+                loginButton.addEventListener("click", () =>
+                    alert(`당신의 공격력은? ${Math.random()}`)
+                );
+            }
+        });
+    </script>
+</body>
+</html>

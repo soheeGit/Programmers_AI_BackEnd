@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>월드컵</title>
+    <style>
+      #container {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin-top: 50px;
+      }
+      div > img {
+        width: 240px;
+        cursor: pointer;
+        transition: transform 0.2s;
+      }
+      div > img:hover {
+        transform: scale(1.1);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container"></div>
+    <h2 id="result" style="text-align: center; margin-top: 20px"></h2>
+
+    <script>
+      let files = ["01", "02", "03", "04"];
+      let shuffled = [...files].sort(() => Math.random() - 0.5); // 순서 섞는 것
+      const container = document.querySelector("#container");
+      const resultText = document.querySelector("#result");
+
+      function displayMatch() {
+        container.innerHTML = ""; // 기존 이미지 삭제
+
+        if (shuffled.length === 1) {
+          resultText.textContent = `우승: ${shuffled[0]}`;
+          return;
+        }
+
+        const pick1 = shuffled.pop();
+        const pick2 = shuffled.pop();
+
+        const img1 = document.createElement("img");
+        img1.src = pick1 + ".jpeg";
+        img1.addEventListener("click", () => {
+          shuffled.unshift(pick1);
+          nextRound();
+        });
+
+        const img2 = document.createElement("img");
+        img2.src = pick2 + ".jpeg";
+        img2.addEventListener("click", () => {
+          shuffled.unshift(pick2);
+          nextRound();
+        });
+
+        container.appendChild(img1);
+        container.appendChild(img2);
+      }
+
+      function nextRound() {
+        setTimeout(displayMatch, 300); // 클릭 후 잠깐 딜레이 후 변경
+      }
+
+      displayMatch(); // 초기 실행
+    </script>
+  </body>
+</html>
