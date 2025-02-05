@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BOM</title>
+  </head>
+
+  <body>
+    <!-- 1단계 : 색상도 선택해서 메모를 하나 추가 -->
+    <!-- <section id="view"></section>
+    <script>
+      const memo = {
+        bgColor: "#F0EDCC",
+        text: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deleniti harum quas, natus tempore omnis architecto debitis voluptatibus temporibus cupiditate, numquam cumque soluta molestiae expedita inventore optio, porro illum aspernatur nobis?",
+      };
+      function drawMemo() {
+        // #view를 찾아서 memo의 bgColor를 배경색으로 하고 text를 textContent로 하는 div를 만드는 함수
+        const view = document.querySelector("#view");
+        view.innerHTML = `<div>${memo.text}</div>`;
+        const memoElement = view.querySelector("div");
+        memoElement.style.backgroundColor = memo.bgColor;
+      }
+      drawMemo();
+    </script> -->
+    <!-- 2단계 : 폼으로 저장하면 내용이 변화 -->
+    <!-- label은 특정한 input에 이름표를 달아주고,  클릭 시 해당 input에 포커스를 주는 기능. 1) 라벨로 인풋을 감싼다 (상하위) 2) for-id -->
+    <!-- <form id="controller">
+      <label>
+        메모 내용 :
+        <input name="memoText" type="text" /> </label
+      ><br />
+      <label>
+        배경 색상 :
+        <input name="memoBgColor" type="color" />
+      </label>
+      <button>추가</button>
+    </form>
+    <section id="view"></section>
+    <script>
+      const memo = {
+        bgColor: "#F0EDCC",
+        text: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deleniti harum quas, natus tempore omnis architecto debitis voluptatibus temporibus cupiditate, numquam cumque soluta molestiae expedita inventore optio, porro illum aspernatur nobis?",
+      };
+      function drawMemo() {
+        // #view를 찾아서 memo의 bgColor를 배경색으로 하고 text를 textContent로 하는 div를 만드는 함수
+        const view = document.querySelector("#view");
+        view.innerHTML = `<div>${memo.text}</div>`;
+        const memoElement = view.querySelector("div");
+        memoElement.style.backgroundColor = memo.bgColor;
+      }
+      const controller = document.querySelector("#controller");
+      controller.addEventListener("submit", function (event) {
+        // 타입 추론
+        // #controller에 listener로 등록할 handler. prevent default. (form 기본 제출) 폼에 있는 text, color -> memo를 수정.
+        event.preventDefault();
+        const form = new FormData(controller);
+        // console.log(...form.entries);
+        memo.text = form.get("memoText");
+        memo.bgColor = form.get("memoBgColor");
+        // console.log(memo);
+        drawMemo(); // DOM을 다시 그려줘야함
+      }); // 함수 호이스팅 (선언식을 쓰지 않으면...)
+      drawMemo();      
+    </script> -->
+    <!-- 3단계 : 메모 여러개 추가 -->
+    <!-- <form id="controller">
+        <label>
+            메모 내용 :
+            <input name="memoText" type="text" /> </label><br />
+        <label>
+            배경 색상 :
+            <input id="colorInput" name="memoBgColor" type="color" />
+        </label>
+        <button>추가</button>
+    </form>
+    <section id="view"></section>
+    <script>
+        // Math.random을 바탕으로 hex를 생성하되 배경색으로 적절한 옅은 hex 색상을 생성하는 익명함수
+        // 그냥 아주 짧게 익명으로
+        function goodBgColor() {
+            return `#${[...Array(3)].map(() => Math.floor(Math.random() * 56) + 200).map(v => v.toString(16).padStart(2, '0')).join('')}`;
+        }
+        document.querySelector("#colorInput").value = goodBgColor();
+        //   const memo = {
+        //     bgColor: "#F0EDCC",
+        //     text: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deleniti harum quas, natus tempore omnis architecto debitis voluptatibus temporibus cupiditate, numquam cumque soluta molestiae expedita inventore optio, porro illum aspernatur nobis?",
+        //   };
+        const memoData = [{
+            bgColor: goodBgColor(),
+            text: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deleniti harum quas, natus tempore omnis architecto debitis voluptatibus temporibus cupiditate, numquam cumque soluta molestiae expedita inventore optio, porro illum aspernatur nobis?",
+        }];
+        function drawMemo() {
+            // #view를 찾아서 memo의 bgColor를 배경색으로 하고 text를 textContent로 하는 div를 만드는 함수
+            const view = document.querySelector("#view");
+            view.innerHTML = ''; // 리셋.
+            // view.innerHTML = `<div>${memo.text}</div>`;
+            // const memoElement = view.querySelector("div");
+            // memoElement.style.backgroundColor = memo.bgColor;
+            // 차이점을 추가해야하는데;;; 기존의 거를 다 추가하네;;;
+            for (const memo of memoData) {
+                const memoElement = document.createElement("div");
+                memoElement.textContent = memo.text;
+                memoElement.style.backgroundColor = memo.bgColor
+                view.appendChild(memoElement);
+            }
+        }
+        const controller = document.querySelector("#controller");
+        controller.addEventListener("submit", function (event) {
+            // 타입 추론
+            // #controller에 listener로 등록할 handler. prevent default. (form 기본 제출) 폼에 있는 text, color -> memo를 수정.
+            event.preventDefault();
+            const form = new FormData(controller);
+            // console.log(...form.entries);
+            const memo = {}; // 임시로 만든다!
+            memo.text = form.get("memoText");
+            memo.bgColor = form.get("memoBgColor");
+            // console.log(memo);
+            memoData.push(memo); // 임시로 만든 memo를 push;
+            drawMemo(); // DOM을 다시 그려줘야함
+        }); // 함수 호이스팅 (선언식을 쓰지 않으면...)
+        drawMemo();      
+    </script> -->
+    <!-- 4단계 : 메모 삭제하기 -->
+    <!-- <form id="controller">
+      <label>
+        메모 내용 :
+        <input name="memoText" type="text" /> </label
+      ><br />
+      <label>
+        배경 색상 :
+        <input id="colorInput" name="memoBgColor" type="color" />
+      </label>
+      <button>추가</button>
+    </form>
+    <section id="view"></section>
+    <script>
+      function goodBgColor() {
+        return `#${[...Array(3)]
+          .map(() => Math.floor(Math.random() * 56) + 200)
+          .map((v) => v.toString(16).padStart(2, "0"))
+          .join("")}`;
+      }
+      document.querySelector("#colorInput").value = goodBgColor();
+      const memoData = [
+        {
+          bgColor: goodBgColor(),
+          text: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deleniti harum quas, natus tempore omnis architecto debitis voluptatibus temporibus cupiditate, numquam cumque soluta molestiae expedita inventore optio, porro illum aspernatur nobis?",
+        },
+      ];
+      function drawMemo() {
+        const view = document.querySelector("#view");
+        view.innerHTML = "";
+        for (const memo of memoData) {
+          const memoElement = document.createElement("div");
+          memoElement.textContent = memo.text;
+          memoElement.style.backgroundColor = memo.bgColor;
+          view.appendChild(memoElement);
+          // 삭제 버튼을 추가
+          const deleteButton = document.createElement("button"); // 태그
+          deleteButton.textContent = "삭제"; // 텍스트
+          deleteButton.addEventListener("click", () => {
+            memoElement.remove(); // remove는 해당 dom 객체를 (자기자신) 삭제.
+          }); // 함수 객체 (화살표 함수)
+          memoElement.appendChild(deleteButton);
+        }
+      }
+      const controller = document.querySelector("#controller");
+      controller.addEventListener("submit", function (event) {
+        event.preventDefault();
+        const form = new FormData(controller);
+        const memo = {};
+        memo.text = form.get("memoText");
+        memo.bgColor = form.get("memoBgColor");
+        memoData.push(memo);
+        drawMemo();
+      });
+      drawMemo();
+    </script> -->
+    <!-- 5단계 : 메모 데이터를 임의 수정으로부터 보호하기 (클로져, 스코프)  -->
+    <!-- <form id="controller">
+      <label>
+        메모 내용 :
+        <input name="memoText" type="text" /> </label
+      ><br />
+      <label>
+        배경 색상 :
+        <input id="colorInput" name="memoBgColor" type="color" />
+      </label>
+      <button>추가</button>
+    </form>
+    <section id="view"></section>
+    <script>
+      function onload() {
+        function goodBgColor() {
+          return `#${[...Array(3)]
+            .map(() => Math.floor(Math.random() * 56) + 200)
+            .map((v) => v.toString(16).padStart(2, "0"))
+            .join("")}`;
+        }
+        document.querySelector("#colorInput").value = goodBgColor();
+        const memoData = [
+          {
+            bgColor: goodBgColor(),
+            text: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deleniti harum quas, natus tempore omnis architecto debitis voluptatibus temporibus cupiditate, numquam cumque soluta molestiae expedita inventore optio, porro illum aspernatur nobis?",
+          },
+        ];
+        function drawMemo() {
+          const view = document.querySelector("#view");
+          view.innerHTML = "";
+          for (const memo of memoData) {
+            const memoElement = document.createElement("div");
+            memoElement.textContent = memo.text;
+            memoElement.style.backgroundColor = memo.bgColor;
+            view.appendChild(memoElement);
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "삭제";
+            deleteButton.addEventListener("click", () => {
+              memoElement.remove();
+            });
+            memoElement.appendChild(deleteButton);
+          }
+        }
+        const controller = document.querySelector("#controller");
+        controller.addEventListener("submit", function (event) {
+          event.preventDefault();
+          const form = new FormData(controller);
+          const memo = {};
+          memo.text = form.get("memoText");
+          memo.bgColor = form.get("memoBgColor");
+          memoData.push(memo);
+          drawMemo();
+        });
+        drawMemo();
+      }
+      onload(); // 난독화까지...
+    </script> -->
+    <!-- 6단계 : 메모 데이터 보존하기 (BOM!)  -->
+    <!-- <form id="controller">
+      <label>
+        메모 내용 :
+        <input name="memoText" type="text" /> </label
+      ><br />
+      <label>
+        배경 색상 :
+        <input id="colorInput" name="memoBgColor" type="color" />
+      </label>
+      <button>추가</button>
+    </form>
+    <section id="view"></section>
+    <script>
+      // (1) 굳이 수동으로나 프로그래밍적으로 지우지 않는다면
+      // (2) 특정 용량까지 보존되는
+      // (3) 특정 주소에 할당된
+      // (4) key-value 형태의 브라우저의 저장공간
+      //   console.log("localStorage", localStorage);
+      // (1) 특정 페이지가 열려 있는 동안에만 지속되는...
+      // (2) ... 다 같음
+      //   console.log("sessionStorage", sessionStorage);
+      function onload() {
+        function goodBgColor() {
+          return `#${[...Array(3)]
+            .map(() => Math.floor(Math.random() * 56) + 200)
+            .map((v) => v.toString(16).padStart(2, "0"))
+            .join("")}`;
+        }
+        document.querySelector("#colorInput").value = goodBgColor();
+        // const memoData = [
+        //   {
+        //     bgColor: goodBgColor(),
+        //     text: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deleniti harum quas, natus tempore omnis architecto debitis voluptatibus temporibus cupiditate, numquam cumque soluta molestiae expedita inventore optio, porro illum aspernatur nobis?",
+        //   },
+        // ];
+        // JSON.parse를 통해 문자열화 되어서 직렬화(Serialization, 메모리에 저장할 수 있게 변환)되었던 객체를 다시 파싱하여 역직렬화(Deserialization)하여 객체화하여 저장
+        // const memoData = [JSON.parse(localStorage.getItem("memo"))];
+        // const memoData = JSON.parse(localStorage.getItem("memoStorage"));
+        // 널 병합 연산자 (??)
+        const memoData = [
+          ...(JSON.parse(localStorage.getItem("memoStorage")) ?? []),
+          ...(JSON.parse(sessionStorage.getItem("memoStorage")) ?? []),
+        ];
+        // console.log(memoData);
+        function drawMemo() {
+          const view = document.querySelector("#view");
+          view.innerHTML = "";
+          for (const memo of memoData) {
+            const memoElement = document.createElement("div");
+            memoElement.textContent = memo.text;
+            memoElement.style.backgroundColor = memo.bgColor;
+            view.appendChild(memoElement);
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "삭제";
+            deleteButton.addEventListener("click", () => {
+              memoElement.remove();
+            });
+            memoElement.appendChild(deleteButton);
+            // 로컬 저장 버튼
+            const localSaveButton = document.createElement("button");
+            localSaveButton.textContent = "로컬 저장 버튼";
+            localSaveButton.addEventListener("click", () => {
+              // key, value -> 둘다 string.
+              //   const memoStr = JSON.stringify(memo); // 직렬화. 문자열화
+              //   console.log(memoStr);
+              //   localStorage.setItem("memo", memoStr); // 저장
+              // false, [], "", 0, null, undefined
+              //   localStorage.clear()
+              // 인덱스를 잡아서 해당 것만 pop하거나 shift하거나... 이런거...
+              //   const memoStorage = localStorage.getItem("memoStorage")
+              //     ? localStorage.getItem("memoStorage")
+              //     : "[]";
+              //   console.log(memoStorage);
+              //   const memoStorage2 = JSON.parse(memoStorage);
+              //   console.log(memoStorage2);
+              //   memoStorage2.push(memo);
+              //   console.log(memoStorage2);
+              //   localStorage.setItem("memoStorage", JSON.stringify(memoStorage2));
+              localStorage.setItem(
+                "memoStorage",
+                JSON.stringify([
+                  ...(JSON.parse(localStorage.getItem("memoStorage")) ?? []),
+                  memo,
+                ])
+              );
+            });
+            memoElement.appendChild(localSaveButton);
+            // 세션 저장 버튼
+            const sessionSaveButton = document.createElement("button");
+            sessionSaveButton.textContent = "세션 저장 버튼";
+            sessionSaveButton.addEventListener("click", () => {
+              sessionStorage.setItem(
+                "memoStorage",
+                JSON.stringify([
+                  ...(JSON.parse(sessionStorage.getItem("memoStorage")) ?? []),
+                  memo,
+                ])
+              );
+            });
+            memoElement.appendChild(sessionSaveButton);
+          }
+        }
+        const controller = document.querySelector("#controller");
+        controller.addEventListener("submit", function (event) {
+          event.preventDefault();
+          const form = new FormData(controller);
+          const memo = {};
+          memo.text = form.get("memoText");
+          memo.bgColor = form.get("memoBgColor");
+          memoData.push(memo);
+          drawMemo();
+        });
+        drawMemo();
+      }
+      onload();
+    </script> -->
+    <!-- 7단계 : 메모에 외부 링크 연결 버튼 만들기 (BOM!)  -->
+    <!-- <form id="controller">
+      <label>
+        메모 내용 :
+        <input name="memoText" type="text" /> </label
+      ><br />
+      <label>
+        링크 :
+        <input name="memoLink" type="url" /> </label
+      ><br />
+      <label>
+        배경 색상 :
+        <input id="colorInput" name="memoBgColor" type="color" />
+      </label>
+      <button>추가</button>
+    </form>
+    <section id="view"></section>
+    <script>
+      function onload() {
+        function goodBgColor() {
+          return `#${[...Array(3)]
+            .map(() => Math.floor(Math.random() * 56) + 200)
+            .map((v) => v.toString(16).padStart(2, "0"))
+            .join("")}`;
+        }
+        document.querySelector("#colorInput").value = goodBgColor();
+        const memoData = [
+          ...(JSON.parse(localStorage.getItem("memoStorage")) ?? []),
+          ...(JSON.parse(sessionStorage.getItem("memoStorage")) ?? []),
+        ];
+        // console.log(memoData);
+        function drawMemo() {
+          const view = document.querySelector("#view");
+          view.innerHTML = "";
+          for (const memo of memoData) {
+            const memoElement = document.createElement("div");
+            memoElement.textContent = memo.text;
+            memoElement.style.backgroundColor = memo.bgColor;
+            view.appendChild(memoElement);
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "삭제";
+            deleteButton.addEventListener("click", () => {
+              memoElement.remove();
+            });
+            memoElement.appendChild(deleteButton);
+            const localSaveButton = document.createElement("button");
+            localSaveButton.textContent = "로컬 저장 버튼";
+            localSaveButton.addEventListener("click", () => {
+              localStorage.setItem(
+                "memoStorage",
+                JSON.stringify([
+                  ...(JSON.parse(localStorage.getItem("memoStorage")) ?? []),
+                  memo,
+                ])
+              );
+            });
+            memoElement.appendChild(localSaveButton);
+            const sessionSaveButton = document.createElement("button");
+            sessionSaveButton.textContent = "세션 저장 버튼";
+            sessionSaveButton.addEventListener("click", () => {
+              sessionStorage.setItem(
+                "memoStorage",
+                JSON.stringify([
+                  ...(JSON.parse(sessionStorage.getItem("memoStorage")) ?? []),
+                  memo,
+                ])
+              );
+            });
+            memoElement.appendChild(sessionSaveButton);
+            // 링크 버튼을 추가 (새 창 열기, 현재 창 열기)
+            // console.log(memo.link);
+            if (memo.link) {
+              // link라고 하는 프로퍼티를 평가해서 존재할때만..
+              const nowLinkButton = document.createElement("button");
+              const newLinkButton = document.createElement("button");
+              nowLinkButton.textContent = "현재 창 열기";
+              newLinkButton.textContent = "새 창 열기";
+              memoElement.appendChild(nowLinkButton);
+              memoElement.appendChild(newLinkButton);
+              // 현재 창 열기
+              nowLinkButton.addEventListener(
+                "click",
+                () => (location.href = memo.link)
+              );
+              // 새 창 열기
+              newLinkButton.addEventListener("click", () =>
+                window.open(memo.link)
+              );
+            }
+          }
+        }
+        const controller = document.querySelector("#controller");
+        controller.addEventListener("submit", function (event) {
+          event.preventDefault();
+          const form = new FormData(controller);
+          const memo = {};
+          memo.text = form.get("memoText");
+          memo.bgColor = form.get("memoBgColor");
+          // 링크 추가
+          memo.link = form.get("memoLink");
+          memoData.push(memo);
+          drawMemo();
+        });
+        drawMemo();
+      }
+      onload();
+    </script> -->
+    <!-- https://aistudio.google.com/ -->
+    <!-- 8단계 : LLM을 통한 예시 메시지 생성 (덤) -->
+    <form id="controller">
+      <label>
+        메모 내용 :
+        <input id="textInput" name="memoText" type="text" /> </label
+      ><br />
+      <label>
+        링크 :
+        <input name="memoLink" type="url" /> </label
+      ><br />
+      <label>
+        배경 색상 :
+        <input id="colorInput" name="memoBgColor" type="color" />
+      </label>
+      <button>추가</button>
+    </form>
+    <section id="view"></section>
+    <script>
+      async function onload() {
+        const apiKey = "AIzaSyDIhlFH0SUyTbo5ayonXQaHwXDixX_Ew-o";
+        // es8
+        async function useGemeni() {
+          const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+          const response = await fetch(url, {
+            method: "POST",
+            body: JSON.stringify({
+              contents: [
+                {
+                  parts: [
+                    {
+                      text: "어떡하면 학생들이 저한테 집중해줄까요? 20자 이내로. 핵심만.",
+                    },
+                  ],
+                },
+              ],
+            }),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+          const json = await response.json();
+          return await json["candidates"][0]["content"]["parts"][0]["text"];
+        }
+        document.querySelector("#textInput").value = await useGemeni();
+        function goodBgColor() {
+          return `#${[...Array(3)]
+            .map(() => Math.floor(Math.random() * 56) + 200)
+            .map((v) => v.toString(16).padStart(2, "0"))
+            .join("")}`;
+        }
+        document.querySelector("#colorInput").value = goodBgColor();
+        const memoData = [
+          ...(JSON.parse(localStorage.getItem("memoStorage")) ?? []),
+          ...(JSON.parse(sessionStorage.getItem("memoStorage")) ?? []),
+        ];
+        function drawMemo() {
+          const view = document.querySelector("#view");
+          view.innerHTML = "";
+          for (const memo of memoData) {
+            const memoElement = document.createElement("div");
+            memoElement.textContent = memo.text;
+            memoElement.style.backgroundColor = memo.bgColor;
+            view.appendChild(memoElement);
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "삭제";
+            deleteButton.addEventListener("click", () => {
+              memoElement.remove();
+            });
+            memoElement.appendChild(deleteButton);
+            const localSaveButton = document.createElement("button");
+            localSaveButton.textContent = "로컬 저장 버튼";
+            localSaveButton.addEventListener("click", () => {
+              localStorage.setItem(
+                "memoStorage",
+                JSON.stringify([
+                  ...(JSON.parse(localStorage.getItem("memoStorage")) ?? []),
+                  memo,
+                ])
+              );
+            });
+            memoElement.appendChild(localSaveButton);
+            const sessionSaveButton = document.createElement("button");
+            sessionSaveButton.textContent = "세션 저장 버튼";
+            sessionSaveButton.addEventListener("click", () => {
+              sessionStorage.setItem(
+                "memoStorage",
+                JSON.stringify([
+                  ...(JSON.parse(sessionStorage.getItem("memoStorage")) ?? []),
+                  memo,
+                ])
+              );
+            });
+            memoElement.appendChild(sessionSaveButton);
+            if (memo.link) {
+              const nowLinkButton = document.createElement("button");
+              const newLinkButton = document.createElement("button");
+              nowLinkButton.textContent = "현재 창 열기";
+              newLinkButton.textContent = "새 창 열기";
+              memoElement.appendChild(nowLinkButton);
+              memoElement.appendChild(newLinkButton);
+              nowLinkButton.addEventListener(
+                "click",
+                () => (location.href = memo.link)
+              );
+              newLinkButton.addEventListener("click", () =>
+                window.open(memo.link)
+              );
+            }
+          }
+        }
+        const controller = document.querySelector("#controller");
+        controller.addEventListener("submit", function (event) {
+          event.preventDefault();
+          const form = new FormData(controller);
+          const memo = {};
+          memo.text = form.get("memoText");
+          memo.bgColor = form.get("memoBgColor");
+          memo.link = form.get("memoLink");
+          memoData.push(memo);
+          drawMemo();
+        });
+        drawMemo();
+      }
+      onload();
+    </script>
+  </body>
+</html>

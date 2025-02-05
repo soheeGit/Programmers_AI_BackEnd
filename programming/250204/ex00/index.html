@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 예외처리 -->
+     <div id="box"></div>
+     <script>
+        const box = document.querySelector("#box");
+        try{
+            box.textContent = "try";
+            null.errorProperty;  // error 발생
+        }catch(error){
+            // box.textContent = "catch";
+            box.textContent = error;
+        } finally{
+            box.textContent += "finally";
+        }
+        // return? block scope? .. 추가 복습 .. 예제 llm... throw new... throw error
+        // Dom -> querySelector/all -> CSS selector
+        // createElement, appendChild, removeChild
+        // NodeList. innerHTML, innerText, textContent
+        // id, classList, attribute -> property
+        // document -> dom + react virtual dom.
+     </script>
+</body>
+</html>

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gugi&family=Poor+Story&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:title" content="독서 추천해드릴게요">
+    <meta property="og:description" content="책과 관련된 모든 것을 물어보세요! 당신의 취향에 맞는 책을 찾아드립니다!">
+    <meta property="og:image" content="https://www.example.com/image.jpg">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <title>독서 추천</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fa;
+            margin: 0;
+            padding: 20px;
+            color: #343a40;
+            font-family: "Poor Story", serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #ffffff;
+            color: rgb(0, 0, 0);
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        #resetButton {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: #ff6b6b;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: bold;
+        }
+        #resetButton:hover {
+            background-color: #ff4d4d;
+        }
+        #controller {
+            display: flex;
+            flex-direction: column;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        label {
+            margin-bottom: 5px;
+            color: #495057;
+            font-weight: bold;
+        }
+        select, textarea {
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+            padding: 10px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        select:focus, textarea:focus {
+            border-color: #6c63ff;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #6c63ff;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 16px;
+            font-family: "Poor Story", serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+        button:hover {
+            background-color: #5a54d1;
+        }
+        #container {
+            margin-top: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .data-item {
+            background-color: #ffffff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            transition: transform 0.2s;
+        }
+        .data-item:hover {
+            transform: scale(1.02);
+        }
+        .reply-box {
+            padding: 8px;
+            margin-top: 5px;
+            background-color: #f9f1f1;
+            border: 1px solid #f1c0c0;
+            border-radius: 5px;
+            color: #333;
+        }
+        .delete-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #ff6b6b;
+            color: white;
+            padding: 5px 8px;
+            font-size: 14px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .delete-button:hover {
+            background-color: #ff4d4d;
+        }
+        textarea{
+            font-family: "Poor Story", serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>📖 함께 독서해요 📖</h1>
+        <button id="resetButton">저장된 데이터 모두 삭제</button>
+    </header>
+    <form id="controller">
+        <label for="modelOption">모델 :</label>
+        <select name="modelOption" id="modelOption">
+            <option value="1">gemini-1.5-flash</option>
+            <option value="2">deepseek-r1</option>
+        </select>
+        <br>
+        <label for="textData">좋아하는 책 장르나 책과 관련된 모든 것을 물어봐주세요 :</label>
+        <textarea name="textData" id="textData" rows="4" placeholder="여기에 좋아하는 책 장르를 입력하세요! AI가 당신의 취향을 찾아드립니다!"></textarea>
+        <button type="submit">등록</button>
+    </form>
+    <div id="container"></div>
+    <script>
+        const _ = () => {
+            const container = document.querySelector("#container");
+            const form = document.querySelector("#controller");
+            const resetButton = document.querySelector("#resetButton");
+            resetButton.addEventListener("click", resetStorageAndContainer);
+            
+            function resetStorageAndContainer() {
+                while(data.length > 0) {
+                    data.pop();
+                }
+            }
+
+            const data = new Proxy([], {
+                set(target, property, value) {
+                    target[property] = value;
+                    updateContainer();
+                    updateStorage(target);
+                    return true;
+                }
+            });
+
+            function onMounted() {
+                data.push(...(JSON.parse(localStorage.getItem("myData")) ?? []));
+            }
+            onMounted();
+
+            function updateContainer() {
+                container.innerHTML = "";
+                for (const d of data) {
+                    const tmp = document.createElement("div");
+                    tmp.className = "data-item";
+                    tmp.textContent = d.text;
+                    const deleteButton = document.createElement("button");
+                    deleteButton.textContent = "삭제";
+                    deleteButton.className = "delete-button";
+                    deleteButton.addEventListener("click", () => {
+                        const filtered = data.filter((value) => value.id !== d.id);
+                        data.length = 0;
+                        data.push(...filtered);
+                    });
+
+                    if (d.reply) {
+                        const box = document.createElement("div");
+                        box.className = "reply-box";
+                        box.textContent = d.reply;
+                        tmp.appendChild(box);
+                    }
+                    tmp.appendChild(deleteButton);
+                    container.appendChild(tmp);
+                }
+            }
+
+            function updateStorage(target) {
+                localStorage.setItem("myData", JSON.stringify(target));
+            }
+
+            async function handleForm(event) {
+                event.preventDefault();
+                const formData = new FormData(form);
+                const text = formData.get("textData");
+                let reply;
+
+                switch(formData.get("modelOption")) {
+                    case "1":
+                        reply = `Gemini : ${await makeReply(text)}`;
+                        break;
+                    case "2":
+                        reply = `DeepSeek : ${await makeReply2(text)}`;
+                        break;
+                    default:
+                        alert("비정상적인 접근!");
+                        throw new Error("알 수 없는 에러!");
+                }
+
+                const displayData = {
+                    id: Date.now(),
+                    text,
+                    reply,
+                };
+                data.push(displayData);
+            }
+
+            async function makeReply(text) {
+                const url = "https://pretty-pine-marsupial.glitch.me/1";
+                const response = await fetch(url, {
+                    method: "POST",
+                    body: JSON.stringify({
+                        text: `너는 20년 경력의 책 전문가야. {${text}}의 메시지를 바탕으로, 책을 추천해주고, 50자 이내에 평문으로 한국어로 작성해줘.`,
+                    }),
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                });
+                const json = await response.json();
+                return json.reply;
+            }
+
+            async function makeReply2(content) {
+                const url = "https://pretty-pine-marsupial.glitch.me/2";
+                const response = await fetch(url, {
+                    method: "POST",
+                    body: JSON.stringify({
+                        text: `너는 20년 경력의 책 전문가야. {${content}}를 바탕으로, 책을 추천해주고 50자 이내인  한국어로 작성해줘.`,
+                    }),
+                    headers: {
+                        "Content-Type": "application/json", 
+                    }
+                });
+                const json = await response.json();
+                return json.reply;
+            }
+
+            form.addEventListener("submit", handleForm);
+        };
+        window.onload = _;
+    </script>
+</body>
+</html>
