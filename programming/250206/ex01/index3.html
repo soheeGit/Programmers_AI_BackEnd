@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="box">
+        <!-- <p id="msg1">기다리다가 지친다</p> -->
+        <p id="msg1">ㅁㅁㅁㅁㅁㅁㅁㅁ</p>
+        <p id="msg2">ㅁㅁㅁㅁㅁㅁㅁㅁ</p>
+        <p id="msg3">ㅁㅁㅁㅁㅁㅁㅁㅁ</p>
+        <p id="msg4">ㅁㅁㅁㅁㅁㅁㅁㅁ</p>
+        <button id="stopBtn">멈춰</button>
+    </div>
+    <script>
+        // 호출 스케쥴링(매크로큐) <-> 마이크로큐(promise)
+        // 3. setInterval
+        const lyrics = [
+            "네모난 침대에서 일어나 눈을 떠보면",
+            "네모난 창문으로 보이는 똑같은 풍경",
+            "네모난 문을 열고 네모난 테이블에 앉아",
+            "네모난 조간신문 본 뒤",
+            "네모난 책가방에 네모난 책들을 넣고",
+            "네모난 버스를 타고 네모난 건물지나",
+            "네모난 학교에 들어서면 또 네모난 교실",
+            "네모난 칠판과 책상들",
+        ]
+        let i = 0;
+        const interval = setInterval(() => {
+            const tmp = document.createElement("p");
+            tmp.textContent = lyrics[i++];
+            document.querySelector("#box").appendChild(tmp);
+            document.querySelector("#stopBtn").addEventListener("click", () => {
+                clearInterval(interval);
+                document.querySelector("#stopBtm").textContent = "멈춘 상태";
+            })
+        }, 2000);
+        // 1번째 : 함수 자체의 실행시간? -> 관련 없어요
+        // 2번째 : 함수 자체의 실행시간 => 반영이 되죠. => 콜백 끝나야 다음 콜백 실행이니까...
+        // 3번째 : ??? => 얘도 1번과 실질적으로 동일해요. 하지만, 전체가 interval로 묶여있기 때문에 반복적으로 동작하는 for문이나 while문 같은 처리가 가능할 뿐이에요.
+        // 1번 케이스는 10초를 각각 기다리게 하고 (누적해서 다음에 10초씩 더 가산), 5초를 실행하고
+        // 2번 케이스는 15초를 실행하게 하고 대신 이어서 실행하게 한다
+        // 3번 케이스는 10초를 반복해서 누적 스타트를 하는데, 실행시간이 각각 5초입니다 (실행시간은 별도입니다)
+        // 공통으로 3번의 실행을 합니다
+        /*
+        1-1 10 5
+        1-2 20 5
+        1-3 30 5 ??? => 실행 완료되는 시간? 35초.
+        => 개별... 각자의 개념이고...
+        2-1 15
+        2-2 15 + 15
+        2-3 15 + 15 + 15 => 45초 => 연쇄의 개념
+        ...
+        3 반복의 개념... => 자세하거나 더 좋은 설명은? AI님이...
+        */
+    </script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>실습3</title>
+  </head>
+  <body>
+    <script>
+      // https://ko.javascript.info/event-loop
+      // es6+의 이전과 이후의 주요 변경점 (기본)
+      // DOM & BOM (기본2)
+      // 이벤트 루프 알고리즘 (추가 질문)
+      console.log("코드 시작!", new Date());
+
+      // 마이크로태스크를 무한정 쌓아보겠다 (어떻게?)
+      // => 재귀적인 Promise를 생성
+      function endlessMicrotasks() {
+        Promise.resolve().then(() => {
+          console.log("마이크로 태스크 실행 (재귀)");
+          if (Math.random() > 0.9) return;
+          endlessMicrotasks();
+        });
+      }
+
+      // 1초 뒤에 실행되는 콜백 (매태)
+      // 실험 1: 마이크로 태스크의 실행 때문에 매크로 태스크에 도달할 수 없음
+      setTimeout(() => {
+        console.log("매1", 1000);
+        console.log("setTimeout 실행 (매크로 태스크)", new Date());
+      }, 1000);
+
+      // 무한 루프를 실행하여 이벤트 루프를 막음
+      let count = 0;
+      setTimeout(() => {
+        console.log("매2", 500);
+        console.log("무한 루프 시작");
+        for (;;) {
+          count++;
+          if (count > 1e9) break; // 강제로 멈추지 않으면 이벤트 루프 정지 -> 일단 멈추긴 함
+        }
+        console.log("무한 루프 끝?");
+      }, 500);
+
+      // 마이크로 태스크 시작
+      endlessMicrotasks();
+
+      console.log("코드 끝??? (근데??? 뭔가가 이상할 예정...)");
+    </script>
+  </body>
+</html>

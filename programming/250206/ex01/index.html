@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>실습1</title>
+</head>
+<body>
+    <div id="box">
+        <!-- <p id="msg1">기다리다가 지친다</p> -->
+        <p id="msg1">ㅁㅁㅁㅁㅁㅁㅁㅁ</p>
+        <p id="msg2">ㅁㅁㅁㅁㅁㅁㅁㅁ</p>
+        <p id="msg3">ㅁㅁㅁㅁㅁㅁㅁㅁ</p>
+        <p id="msg4">ㅁㅁㅁㅁㅁㅁㅁㅁ</p>
+        <button id="stopBtn">멈춰</button>
+    </div>
+    <script>
+        // 콜백 1. 어떠한 상호작용(이벤트)이나 함수의 결과(패러미터, 미들웨어, 훅..)로서 실행되는 다른 함수가 있다. -> 그걸 지정하기 위해, 익명함수의 형태나, 객체 또는 변수 담긴 함수를 이름 그자체(일급객체) -> 집어넣어서 실행 (handler)
+        // 콜백 2. 함수형 프로그래밍 -> 메서드 체이닝. 함수 체이닝. 고차 함수 연결해서 사용을 할 때 연속된 작업을 작업을 나타내는 형태로 이어지는 형태를 콜백 느낌으로 진행을 한다.
+        // 콜백 3. 비동기 처리나 네트워크 처리 같이 무언가 외부나 다른 메모리나 인터페이스, 인프라, 프로토콜 등을 사용하고 나서 그 결과에 대한 처리를 수행하는 방식에 대한 일반적인 정의, 그것을 위한 함수적(선행적으로 선언이나 동작들의 묶음)으로 대응한는 것들.
+
+        // function. 화살표. 함수객체. ???. 많이 해봄
+
+        // 1. setTimeOut setInterval clear...
+        // 2. callback hell(웹 2대 지옥) -> div hell, callback hell + component hell(provider, scope -> 상태관리라던가, 테마라던가, 전역상태라던가... 관리해주기 위해서 특정한 권역(scope)을 만들어야 하는데 그러다보니까 그게 겹치면 결과적으로 태그가 겹쳐 이상해지는 걸 의미...)
+
+        // https://developer.mozilla.org/ko/docs/Web/API/Window/setTimeout
+        // const timer = setTimeout(() => {
+        //     // alert("뮤즈 노래 들으세요!");
+        //     document.querySelector("#msg1").textContent = "음~ U Know 넌 넌 내맘 아니?";
+        // }, 10000)   // 10초 -> 10000ms -> ms -> 1/1000초
+        // console.log(timer);     // 3 출력되는데, 이게 식별자임. 이걸사용해서 중지시킬수있음
+        // document.querySelector("#stopBtn").addEventListener("click", () => {
+        //     clearTimeout(timer);
+        //     document.querySelector("#msg1").textContent = "멈춰버렸잖아!";
+        // });
+        // 1. 첫번째 풀이 
+        const line1 = setTimeout(() => {
+        document.querySelector("#msg1").textContent =
+          "상처를 치료해줄 사람 어디 없나";
+        }, 3000);
+        const line2 = setTimeout(() => {
+            document.querySelector("#msg2").textContent =
+            "가만히 놔두다간 끊임없이 덧나";
+        }, 3000 * 2);
+        const line3 = setTimeout(() => {
+            document.querySelector("#msg3").textContent =
+            "사랑도 사람도 너무나도 겁나";
+        }, 3000 * 3);
+        const line4 = setTimeout(() => {
+            document.querySelector("#msg4").textContent =
+            "혼자인게 무서워 난 잊혀질까 두려워";
+        }, 3000 * 4);
+        function stopAll() {
+            for (const el of [line1, line2, line3, line4]){
+                clearTimeout(el);
+            }
+        }
+        document.querySelector("#stopBtn").addEventListener("click", stopAll);
+    </script>
+</body>
+</html>

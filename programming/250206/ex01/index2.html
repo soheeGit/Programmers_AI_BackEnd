@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="box">
+        <!-- <p id="msg1">기다리다가 지친다</p> -->
+        <p id="msg1">ㅁㅁㅁㅁㅁㅁㅁㅁ</p>
+        <p id="msg2">ㅁㅁㅁㅁㅁㅁㅁㅁ</p>
+        <p id="msg3">ㅁㅁㅁㅁㅁㅁㅁㅁ</p>
+        <p id="msg4">ㅁㅁㅁㅁㅁㅁㅁㅁ</p>
+        <button id="stopBtn">멈춰</button>
+    </div>
+    <script>
+        // 2. 두번째 풀이(콜백 지옥에 오신 걸 환영합니다 - 비동기를 동기처럼) 자 그러면 아예 콜백 내부에서 콜백을 호출하게 만들면 어떻게 되지 않을까?(문제의 시작)
+        const line1 = setTimeout(() => {
+            const stopThis1 = () => {
+                clearTimeout(line1);
+                console.log("stopThis1");
+            };
+            document.querySelector("#stopBtn").addEventListener("click", stopThis1);
+            document.querySelector("#msg1").textContent = "상처를 치료해줄 사람 어디 없나";
+            const line2 = setTimeout(() => {
+                document.querySelector("#stopBtn").removeEventListener("click", stopThis1);
+                const stopThis2 = () => {
+                    clearTimeout(line2);
+                    console.log("stopThis2");
+                };
+                document.querySelector("#stopBtn").addEventListener("click", stopThis2);
+                document.querySelector("#msg2").textContent = "가만히 놔두다간 끊임없이 덧나";
+                const line3 = setTimeout(() => {
+                    document.querySelector("#stopBtn").removeEventListener("click", stopThis2);
+                    const stopThis3 = () => {
+                        clearTimeout(line3);
+                        console.log("stopThis3");
+                    };
+                    document.querySelector("#stopBtn").addEventListener("click", stopThis3);
+                    document.querySelector("#msg3").textContent = "사랑도 사람도 너무나도 겁나";
+                    const line4 = setTimeout(() => {
+                        document.querySelector("#stopBtn").removeEventListener("click", stopThis3);
+                        document.querySelector("#msg4").textContent = "혼자인게 무서워 난 잊혀질까 두려워";
+                        console.log("finish");
+                    }, 3000);
+                }, 3000);
+            }, 3000);
+        }, 3000);
+    </script>
+</body>
+</html>
