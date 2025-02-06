@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gugi&family=Jua&family=Poor+Story&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="img/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="img/favicon.svg" />
+    <link rel="shortcut icon" href="img/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png" />
+    <link rel="manifest" href="img/site.webmanifest" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>해리포터 이상형 월드컵</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #2C3E50;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: fadeIn 0.5s ease-in;
+            height: 100vh;
+            justify-content: center;
+            font-family: "Jua", serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        h1 {
+            margin-top: 20px;
+            color: #F5F5DC;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+            font-size: 36px;
+        }
+        #subtitle {
+            font-size: 20px;
+            color: #F5F5DC;
+            margin: 10px 0;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+        }
+        #container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+            padding: 40px;
+            background-color: rgba(255, 255, 255, 0.85);
+            border-radius: 20px;
+            box-shadow: 0 6px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s;
+        }
+        #container:hover {
+            transform: scale(1.05);
+        }
+        .image-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 180px;
+        }
+        .image-container img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .image-container img:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        #vs {
+            font-size: 48px;
+            color: #F5F5DC;
+            align-self: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        #result {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 24px;
+            color: #F5F5DC;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        .caption {
+            text-align: center;
+            margin-top: 5px;
+            font-size: 18px;
+            color: #333;
+        }
+        footer {
+            margin-top: 30px;
+            font-size: 14px;
+            color: #888;
+            text-align: center;
+        }
+        .header-background {
+            background-image: url('path/to/your/hp-background.jpg');
+            background-size: cover;
+            background-position: center;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        /* 버튼 스타일 */
+        .button {
+            background-color: #F5F5DC;
+            color: #2C3E50;
+            font-size: 18px;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+        .button:hover {
+            background-color: #F1C40F;
+        }
+
+        /* 결과 화면 스타일 */
+        .result-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+        .result-container .image-container {
+            width: 100%;
+            max-width: 300px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header-background"></div>
+    <h1>해리포터 이상형 월드컵</h1>
+    <div id="subtitle">마음에 드는 캐릭터를 골라주세요!</div>
+    <div id="container">
+        <div class="image-container" id="pick1-container"></div>
+        <div id="vs">VS</div>
+        <div class="image-container" id="pick2-container"></div>
+    </div>
+    <h2 id="result"></h2>
+    <footer>© 2025 해리포터 팬 사이트</footer>
+
+    <script>
+      const files = [
+          { id: "01", name: "해리포터" },
+          { id: "02", name: "론 위즐리" },
+          { id: "03", name: "헤르미온느 그레인저" },
+          { id: "04", name: "알버스 덤블도어" },
+          { id: "05", name: "세베루스 스네이프" },
+          { id: "06", name: "볼드모트" },
+          { id: "07", name: "드레이코 말포이" },
+          { id: "08", name: "시리우스 블랙" },
+          { id: "09", name: "릴리 포터" },
+          { id: "10", name: "제임스 포터" },
+          { id: "11", name: "루나 러브굿" },
+          { id: "12", name: "네빌 롱바텀" },
+          { id: "13", name: "조지와 프레드 위즐리" },
+          { id: "14", name: "미네바 맥고나걸" },
+          { id: "15", name: "벨라트릭스 레스트레인지" },
+          { id: "16", name: "도비" },
+          { id: "17", name: "세드릭 디고리" },
+          { id: "18", name: "피터 페티그루" },
+          { id: "19", name: "지니 위즐리" },
+          { id: "20", name: "앨러스터 무디" },
+          { id: "21", name: "리무스 루핀" },
+          { id: "22", name: "루베우스 해그리드" },
+          { id: "23", name: "시무스 피니간" },
+          { id: "24", name: "라벤더 브라운" },
+          { id: "25", name: "퍼시 위즐리" },
+          { id: "26", name: "몰리 위즐리" },
+          { id: "27", name: "아서 위즐리" },
+          { id: "28", name: "루시우스 말포이" },
+          { id: "29", name: "헤그위드" },
+          { id: "30", name: "퍽스" },
+          { id: "31", name: "벅빅" },
+          { id: "32", name: "사이빌 트릴로니" }
+      ];
+  
+      let shuffled = [...files].sort(() => Math.random() - 0.5);
+      const pick1Container = document.querySelector("#pick1-container");
+      const pick2Container = document.querySelector("#pick2-container");
+      const resultText = document.querySelector("#result");
+      const vsText = document.querySelector("#vs");
+      const container = document.querySelector("#container");
+  
+      function displayMatch() {
+          pick1Container.innerHTML = "";
+          pick2Container.innerHTML = "";
+  
+          if (shuffled.length === 1) {
+              const winner = shuffled[0];
+              container.innerHTML = `
+                  <div class="result-container">
+                      <div class="image-container">
+                          <img src="img/${winner.id}.jpg" alt="Winner" style="border-radius: 10px;">
+                          <div class="caption">${winner.name}</div>
+                      </div>
+                  </div>
+              `;
+              resultText.innerHTML = `당신의 이상형은 ${winner.name}입니다!`;
+              vsText.style.display = 'none';  // 결과가 나왔을 때 VS 숨기기
+              return;
+          }
+  
+          const pick1 = shuffled.pop();
+          const pick2 = shuffled.pop();
+  
+          const img1 = document.createElement("img");
+          img1.src = "img/" + pick1.id + ".jpg";
+          img1.addEventListener("click", () => {
+              shuffled.unshift(pick1);
+              nextRound();
+          });
+  
+          const img2 = document.createElement("img");
+          img2.src = "img/" + pick2.id + ".jpg";
+          img2.addEventListener("click", () => {
+              shuffled.unshift(pick2);
+              nextRound();
+          });
+  
+          const caption1 = document.createElement("div");
+          caption1.className = "caption";
+          caption1.textContent = pick1.name;
+  
+          const caption2 = document.createElement("div");
+          caption2.className = "caption";
+          caption2.textContent = pick2.name;
+  
+          pick1Container.appendChild(img1);
+          pick1Container.appendChild(caption1);
+  
+          pick2Container.appendChild(img2);
+          pick2Container.appendChild(caption2);
+      }
+  
+      function nextRound() {
+          setTimeout(displayMatch, 300);
+      }
+  
+      displayMatch();
+  </script>
+  
+</body>
+</html>
