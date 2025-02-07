@@ -294,27 +294,6 @@
                 return json.reply;
             }
 
-        //     async function fetchGeminiReply(text, model) {
-        //     const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=AIzaSyCLsbA9hI5HUZjeQA8FLaPNtSq7t1R5LRA`;
-        //     const response = await fetch(url, {
-        //         method: "POST",
-        //         headers: { "Content-Type": "application/json" },
-        //         body: JSON.stringify({
-        //         contents: [
-        //             {
-        //             parts: [
-        //                 {
-        //                 text: `너는 20년 경력의 책 전문가야. {${text}}의 메시지를 바탕으로, 책을 추천해주고, 50자 이내에 평문으로 한국어로 작성해줘.`,
-        //                 },
-        //             ],
-        //             },
-        //         ],
-        //         }),
-        //     });
-        //     const json = await response.json();
-        //     return json.candidates[0].content.parts[0].text;
-        // }
-
             form.addEventListener("submit", handleForm);
         };
         window.onload = _;
