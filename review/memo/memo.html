@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOM</title>
+</head>
+<body>
+     <!-- 1단계: 색상 생각해서 메모를 하나 추가 -->
+     <!-- 2단계: 폼으로 저장하면 내용이 변화 -->
+     <!-- 3단계: 메모를 여러개 추가할 수 있도록 변경 -->
+     <!-- 4단계: 메모 삭제하기 -->
+     <!-- 5단계: 메모 데이터를 임의 수정으로부터 보호하기(클로저, 스코프) -->
+     <!-- 6단계: 메모 데이터 보존하기(BOM) -->
+     <!-- 7단계: 메모에 외부 링크 연결 버튼 만들기(BOM!) -->
+     <!-- 8단계: LLM을 통한 예시 메시지 생성 -->
+     <form id="controller">
+        <label>
+            메모 내용 :
+            <input name="memoText" type="text"/>
+        </label>
+        <label>
+            링크 :
+            <input name="memoLink" type="url"/>
+        </label>
+        <label>
+            배경 색상 :
+            <input id="colorInput" name="memoBgColor" type="color"/>
+        </label>
+        <br>
+        <label>
+            메모 내용 :
+            <input id="aiText" name="aiText" type="text"/>
+        </label>
+        <button>추가</button>
+     </form>
+     <section id="view"></section>
+     <div id="textInput" ></div>
+     <script>
+        async function onload(){
+            async function useGemeni(aiText) {
+                const url = `https://stream-automatic-allium.glitch.me`
+                const response = await fetch(url, {
+                    method: "POST",
+                    body: JSON.stringify({ aiText }),
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                });
+                return await response.text();
+            }
+            function goodBgColor(){     // 무작위로 배경색을 생성하는 역할
+                return `#${[...Array(3)].map(() => Math.floor(Math.random() * 56) + 200).map(v => v.toString(16).padStart(2, '0')).join('')}`;
+            }
+            document.querySelector("#colorInput").value = goodBgColor();
+            const memoData = [
+                ...(JSON.parse(localStorage.getItem("memoStorage")) ?? []),
+                ...(JSON.parse(sessionStorage.getItem("memoStorage")) ?? []),
+            ];
+            function drawMemo(){
+                const view = document.querySelector("#view");
+                view.innerHTML = ``;
+                for(const memo of memoData){
+                    const memoElement = document.createElement("div");
+                    memoElement.style.backgroundColor = memo.bgColor;
+                    memoElement.textContent = memo.text;
+                    view.appendChild(memoElement);
+
+                    // 삭제 버튼 추가
+                    const deleteButton = document.createElement("button");
+                    deleteButton.textContent ="삭제";
+                    deleteButton.addEventListener("click", () => {
+                        memoElement.remove();
+                    })
+                    memoElement.appendChild(deleteButton);
+
+                    // 로컬 저장 버튼
+                    const localSaveButton = document.createElement("button");
+                    localSaveButton.textContent = "로컬 저장 버튼";
+                    localSaveButton.addEventListener("click", () => {
+                        localStorage.setItem(
+                            "memoStorage",
+                            JSON.stringify([
+                                ...(JSON.parse(localStorage.getItem("memoStorage")) ?? []),
+                                memo,
+                            ])
+                        )
+                    })
+                    memoElement.appendChild(localSaveButton);
+
+                    // 세션 저장 버튼
+                    const sessionSaveButton = document.createElement("button");
+                    sessionSaveButton.textContent = "세션 저장 버튼";
+                    sessionSaveButton.addEventListener("click", () => {
+                        sessionStorage.setItem(
+                            "memoStorage",
+                            JSON.stringify([
+                                ...(JSON.parse(sessionStorage.getItem("memoStorage")) ?? []),
+                                memo,
+                            ])
+                        )
+                    })
+                    memoElement.appendChild(sessionSaveButton);
+
+                    // 링크 버튼을 추가 (새 창 열기, 현재 창 열기)
+                    if(memo.link) {
+                        const nowLinkButton = document.createElement("button");
+                        const newLinkButton = document.createElement("button");
+                        nowLinkButton.textContent = "현재 창 열기";
+                        newLinkButton.textContent = "새 창 열기";
+                        memoElement.appendChild(nowLinkButton);
+                        memoElement.appendChild(newLinkButton);
+                        // 현재 창 열기
+                        nowLinkButton.addEventListener(
+                            "click",
+                            () => (location.href = memo.link)
+                        )
+                        // 새 창 열기
+                        newLinkButton.addEventListener("click", () => 
+                            window.open(memo.link)
+                        );
+                    }
+                }
+            }
+            const aiText =  document.querySelector("#aiText");
+                console.log(aiText.value);
+            const controller = document.querySelector("#controller");
+            controller.addEventListener("submit", async function(event){
+                event.preventDefault();
+                const formData = new FormData(controller);
+                const memo = {};
+                memo.text = formData.get("memoText");
+                memo.bgColor = formData.get("memoBgColor");
+                memo.link = formData.get("memoLink");
+                memo.gemini = document.querySelector("#textInput").textContent;
+                memoData.push(memo);
+                document.querySelector("#textInput").textContent = await useGemeni(aiText.value);
+                drawMemo(); // 변경된 내용을 다시 그려야 함
+            })
+            drawMemo();
+        }
+        onload();
+     </script>
+</body>
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LLM Chaining / LLM Pipeline</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      main {
+        width: 100%;
+        padding: 24px;
+      }
+      section {
+        width: 100%;
+      }
+      form section {
+        margin: 8px 0;
+      }
+      form textarea {
+        resize: none;
+        width: 100%;
+        height: 2.5rem;
+      }
+      form button {
+        padding: 4px;
+      }
+      #box p {
+        margin: 8px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section>
+        <h1>개발자 자기소개서 생성기</h1>
+        <form id="controller">
+          <section>
+            <label>
+              포지션 :
+              <select name="position">
+                <option value="1">프런트엔드</option>
+                <option value="2">백엔드</option>
+                <option value="3">풀스택</option>
+              </select>
+            </label>
+          </section>
+          <section>
+            <label>
+              커리어 :
+              <select name="carrer">
+                <option value="1">주니어</option>
+                <option value="2">팀장</option>
+                <option value="3">시니어</option>
+                <option value="4">CTO</option>
+              </select>
+            </label>
+          </section>
+          <section>
+            <textarea
+              name="briefing"
+              placeholder="본인에 대한 간단한 설명을 작성해주세요!"
+            ></textarea>
+          </section>
+          <section>
+            <button>제출</button>
+          </section>
+        </form>
+        <div id="box"></div>
+      </section>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        const addMsg = (msg) => {
+          const box = document.querySelector("#box");
+          const p = document.createElement("p");
+          p.textContent = msg;
+          box.appendChild(p);
+        };
+
+        const form = document.querySelector("#controller");
+        form.addEventListener("submit", async (event) => {
+          event.preventDefault();
+          const formData = new FormData(form); // Map
+          const [position, carrer, briefing] = [...formData.keys()].map((key) =>
+            formData.get(key)
+          );
+          // 개발자도구 > 애플리케이션 > 로컬 스토리지 > 현재 주소 > 키 : GEMINI_API_KEY : 직접 입력
+          const GEMINI_API_KEY = localStorage.getItem("GEMINI_API_KEY");
+
+          const callModel = async (
+            prompt,
+            modelName = "gemini-2.0-pro-exp-02-05",
+            action = "generateContent",
+            generationConfig = {}
+          ) => {
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:${action}?key=${GEMINI_API_KEY}`;
+            /*
+            axios.post() 할때 괄호 안에 넣는 curl형식
+            - https://aistudio.google.com/prompts/new_chat 에서 create prompt 에서 Get code
+            - API documentation에서 원하는 기능을 찾아서 예시를 보고 구현
+            - AI에게 물어보면 (대부분은) 만들어줌
+            */
+            const response = await axios.post(
+              url,
+              {
+                contents: [
+                  {
+                    parts: [
+                      {
+                        text: prompt,
+                      },
+                    ],
+                  },
+                ],
+                generationConfig,
+              },
+              {
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              }
+            );
+            // return response.data;
+            return response.data.candidates[0].content.parts[0].text;
+          };
+
+          const summary = async (text) => {
+            const result = await callModel(
+              `{${text}}의 내용을 개발자 취업에 중요한 내용을 중심으로 한글로 된 100자 이내로 요약 또는 증강하며 마크다운 없이, 글자수 카운트 없이 평문으로만 작성`
+            );
+            return result;
+          };
+          const summarized = await summary(briefing);
+          addMsg(summarized);
+
+          const thinking = async (positionKey, carrerKey, summarized) => {
+            const positionValues = ["프런트엔드", "백엔드", "풀스택"];
+            const carrerValues = ["주니어", "팀장", "시니어", "CTO"];
+            const positionName = positionValues[positionKey] ?? "알 수 없음";
+            const carrerName = carrerValues[carrerKey] ?? "알 수 없음";
+            for (;;) {
+              // 아니면 평생 루프;;;
+              try {
+                // 구글 계정 3개 만들어서 1번 키에 하나 던지고, 2번 키에 하나 던지고...
+                const result = await callModel(
+                  `포지션이 ${positionName}의 커리어 수준이 ${carrerName} 정도이며 ${summarized}의 특징을 가지고 있는 개발자의 이력서 샘플을 작성하기 위한 1. 해당 개발자를 상징하는 만화 느낌의 동물 캐릭터를 생성할 수 있는 영어 프롬프트 2. 간단한 300자 이내의 자기소개를 작성해주는 한글 프롬프트 3. 3개의 500자 이내의 마크다운으로 되어 있는 주요 포트폴리오 경험 목록을 작성해주는 한글 프롬프트를 만들어주세요.`,
+                  "gemini-2.0-flash-thinking-exp-01-21"
+                );
+                // return result // 이 때는 직렬화가 필요 -> 어떻게 객체가 나올지 모르기 때문에 -> 이 구조를 dom으로 표현하고 싶으면 직렬화가 필요했고 (console.log는 괜찮지만...)
+                return result; // 리턴 나면 탈출할 수 있는데...
+              } catch (error) {
+                console.error(error);
+                await new Promise((resolve) =>
+                  setTimeout(() => resolve(), 2000)
+                ); // 버그가 나면 2초 지나고 재시도
+              }
+            }
+          };
+          const thought = await thinking(position, carrer, summarized);
+          // console.log(thought);
+          // addMsg(JSON.stringify(thought));
+          addMsg(thought); // 이미 프로퍼티나 키로 접근을 했으면 필요없음.
+
+          const destructure = async (text) => {
+            const result = await callModel(
+              `{${text}}는 3개의 프롬프트로 구성되어 있습니다. 해당 프롬프트를 각각 추출하여 양식에 맞게 반환해주세요.`,
+              "gemini-2.0-pro-exp-02-05",
+              "generateContent",
+              {
+                response_mime_type: "application/json",
+                response_schema: {
+                  type: "ARRAY",
+                  items: {
+                    type: "OBJECT",
+                    properties: {
+                      prompt: { type: "STRING" },
+                    },
+                  },
+                },
+              }
+            );
+            return JSON.parse(result);
+          };
+          const promptList = await destructure(thought);
+          console.log(promptList);
+          addMsg(JSON.stringify(promptList));
+        });
+      });
+    </script>
+  </body>
+</html>

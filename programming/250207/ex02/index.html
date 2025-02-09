@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LLM Chaining / LLM Pipeline</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      main {
+        width: 100%;
+        padding: 24px;
+      }
+      section {
+        width: 100%;
+      }
+      form section {
+        margin: 8px 0;
+      }
+      form textarea {
+        resize: none;
+        width: 100%;
+        height: 2.5rem;
+      }
+      form button {
+        padding: 4px;
+      }
+      #box p {
+        margin: 8px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section>
+        <h1>개발자 자기소개서 생성기</h1>
+        <form id="controller">
+          <section>
+            <label>
+              포지션 :
+              <select name="position">
+                <option value="1">프런트엔드</option>
+                <option value="2">백엔드</option>
+                <option value="3">풀스택</option>
+              </select>
+            </label>
+          </section>
+          <section>
+            <label>
+              커리어 :
+              <select name="carrer">
+                <option value="1">주니어</option>
+                <option value="2">팀장</option>
+                <option value="3">시니어</option>
+                <option value="4">CTO</option>
+              </select>
+            </label>
+          </section>
+          <section>
+            <textarea
+              name="briefing"
+              placeholder="본인에 대한 간단한 설명을 작성해주세요!"
+            ></textarea>
+          </section>
+          <section>
+            <button>제출</button>
+          </section>
+        </form>
+        <div id="box"></div>
+      </section>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+      /*
+        1. 입력을 처리한다 -> 니즈를 분석한다 (복잡한 생각을 하는게 좋아)
+        2. 구체적인 행동으로 만든다 -> 굳이 CoT를 안해도...
+        3. 텍스트 생성, 이미지 생성, 동영상 생성, 파일 생성 -> 명확한 입출력 정해져 있는. 미리 프롬프팅이 정해져있는?
+        4. 구조화된 생성 (JSON -> RestFul), 마크다운 형식???
+        (1) 지연(속도) - 분산 처리. 리버스 프록시... -> nginx, api gateway... (지금할 건 아님) - msa, k8s, docker... hsa
+        (2) 비용 - 토큰 단위로 청구가 되기 때문에 -> 쓸데없는 조사(을/를/이/가)라던가 이모티콘인데 만약 의미없다면? 띄어쓰기 이런게 의미 없다면? -> 임베딩 -> 벡터DB -> 결과를 끌어오는 것도 가능 (자주 질문되거나 만약 정말 중요하거나 많이 쓰이거나 성능을 끌어올릴 수 있다면 DB 저장된 것들을 프롬프트나 결과에 반영해서 사용하는데 이럴 때 증강하는 기술을 -> RAG)
+        (3) 안정성 - (1)이랑 비슷한데... 무중단 서비스라던가, 1번은 어... 조금은 여유가 있다면 이거는 이제... 만약에 gemini가 down되면? 대안은 있어? 같은 문제. 갑자기 gemini가 세상에 사라지면 넌 어떻게 할꺼야? groq이 네 key를 없애면 어떻게 할꺼야? 갑자기 유저가 10만명 되서 네 예산이 모두 소진이 되면 어떻게 할거야? - 다른 서비스에 의존했을 때 어떻게 할꺼야? 답은? -> 일단 돈 좀 빌려서 GPU 사서 로컬 돌림 그걸 비상 서버 혹은 예비 서버 혹은 (...) 구축 해놓음.
+        */
+      //   const _ = async () => {};
+      //   window.onload = _;
+      document.addEventListener("DOMContentLoaded", async () => {
+        // alert("DOM Loading 완료!");
+        const addMsg = (msg) => {
+          const box = document.querySelector("#box");
+          const p = document.createElement("p");
+          p.textContent = msg;
+          box.appendChild(p);
+        };
+
+        const form = document.querySelector("#controller");
+        form.addEventListener("submit", async (event) => {
+          event.preventDefault();
+          //   alert("폼 제출 검사");
+          const formData = new FormData(form); // Map
+          //   alert(
+          //     ["position", "carrer", "briefing"].map((key) => formData.get(key))
+          //   );
+          //   alert([...formData.keys()].map((key) => formData.get(key)));
+          const [position, carrer, briefing] = [...formData.keys()].map((key) =>
+            formData.get(key)
+          );
+          // (1) briefing에 있는 문장을 임베딩(단어들로 쪼개서 토큰화를 잘 해서 의미 있는 값만해서 절약? 압축?)
+          // (2) position, carrer, briefing(emb) -> thinking -> (1) json (2) img
+
+          // https://axios-http.com/kr/docs/intro
+          // https://aistudio.google.com/prompts/new_chat
+          // https://ai.google.dev/gemini-api/docs/embeddings?hl=ko
+          const GEMINI_API_KEY = "AIzaSyDIhlFH0SUyTbo5ayonXQaHwXDixX_Ew-o";
+          //   const embedding = async (text) => {
+          //     const url = `https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:embedContent?key=${GEMINI_API_KEY}`;
+          //     const response = await axios.post(
+          //       url,
+          //       {
+          //         model: "models/text-embedding-004",
+          //         content: {
+          //           parts: [
+          //             {
+          //               text,
+          //             },
+          //           ],
+          //         },
+          //       },
+          //       {
+          //         headers: {
+          //           "Content-Type": "application/json",
+          //         },
+          //       }
+          //     );
+          //     return response.data;
+          //   };
+          //   alert(JSON.stringify(await embedding(briefing)));
+          const summary = async (text) => {
+            // const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-pro-exp-02-05:generateContent?key=${GEMINI_API_KEY}`;
+            const model = "gemini-2.0-pro-exp-02-05";
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEMINI_API_KEY}`;
+            const response = await axios.post(
+              url,
+              {
+                contents: [
+                  {
+                    parts: [
+                      {
+                        text: `{${text}}의 내용을 개발자 취업에 중요한 내용을 중심으로 한글로 된 100자 이내로 요약 또는 증강하며 마크다운 없이, 글자수 카운트 없이 평문으로만 작성`,
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              }
+            );
+            // return response.data;
+            return response.data.candidates[0].content.parts[0].text;
+          };
+          //   alert(JSON.stringify(await summary(briefing)));
+          const summarized = await summary(briefing);
+          addMsg(summarized);
+
+          const thinking = async (positionKey, carrerKey, summarized) => {
+            const positionValues = ["프런트엔드", "백엔드", "풀스택"];
+            const carrerValues = ["주니어", "팀장", "시니어", "CTO"];
+            const model = "gemini-2.0-flash-thinking-exp-01-21";
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEMINI_API_KEY}`;
+            const positionName = positionValues[positionKey] ?? "알 수 없음";
+            const carrerName = carrerValues[carrerKey] ?? "알 수 없음";
+            // https://ai.google.dev/gemini-api/docs/structured-output?hl=ko&lang=rest
+            const response = await axios.post(
+              url,
+              {
+                contents: [
+                  {
+                    parts: [
+                      {
+                        text: `포지션이 ${positionName}의 커리어 수준이 ${carrerName} 정도이며 ${summarized}의 특징을 가지고 있는 개발자의 이력서 샘플을 작성하기 위한 1. 해당 개발자를 상징하는 만화 느낌의 동물 캐릭터를 생성할 수 있는 영어 프롬프트 2. 간단한 300자 이내의 자기소개를 작성해주는 한글 프롬프트 3. 3개의 500자 이내의 마크다운으로 되어 있는 주요 포트폴리오 경험 목록을 작성해주는 한글 프롬프트를 만들어주세요.`,
+                      },
+                    ],
+                    // generationConfig: {
+                    //   response_mime_type: "application/json",
+                    //   response_schema: {
+                    //     type: "ARRAY",
+                    //     items: {
+                    //       type: "OBJECT",
+                    //       properties: {
+                    //         prompt: { type: "STRING" },
+                    //       },
+                    //     },
+                    //   },
+                    // },
+                  },
+                ],
+              },
+              {
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              }
+            );
+            return response.data;
+          };
+          const thought = await thinking(position, carrer, summarized);
+          addMsg(JSON.stringify(thought));
+        });
+      });
+    </script>
+  </body>
+</html>
