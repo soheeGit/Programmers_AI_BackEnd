@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <section>
+        <form id="controller">
+            <input type="text" name="content">
+            <button>등록</button>
+        </form>
+    </section>
+    <section>
+        <form id="file">
+          <input type="file" id="fileInput" />
+          <button>파일 등록</button>
+        </form>
+      </section>
+    </section>
+    <section id="container"></section>
+</body>
+<script>
+    const supabaseUrl = "https://fihzjbchghmobyvvdqjq.supabase.co";
+    const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZpaHpqYmNoZ2htb2J5dnZkcWpxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzkyMzM1MzIsImV4cCI6MjA1NDgwOTUzMn0.HZ-2a7VBqZpoQSrVZZmtWuoImMkVyMOStbTcnB7VvYw";
+    const tableName = "MY_TABLE";
+    const form = document.querySelector("#controller");
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault(); // 한번 form 관련된 걸 다 밀어버려서...
+      const formData = new FormData(form); // prevent default 때문에... 여기서 실행해줘야함...
+      // 데이터 추가
+      console.log(formData.get("content"));
+      // 401 권한 부족 이슈
+      // RLS을 풀면 ... -> RLS를 풀면 다 풀리는듯;;;
+      const response = await fetch(`${supabaseUrl}/rest/v1/${tableName}`, {
+        method: "POST",
+        headers: {
+          apikey: supabaseAnonKey,
+          Authorization: `Bearer ${supabaseAnonKey}`,
+          "Content-Type": "application/json",
+          Prefer: "return=representation",
+        },
+        body: JSON.stringify({
+          content: formData.get("content"),
+        }),
+      });
+      console.log(await response.json());
+
+      // 권한 문제 (401 예상...)
+      // -> 401이 아니라 권한이 없어서 그냥 안줌;;;
+      const response2 = await fetch(`${supabaseUrl}/rest/v1/${tableName}`, {
+        method: "GET",
+        headers: {
+          apikey: supabaseAnonKey,
+          Authorization: `Bearer ${supabaseAnonKey}`,
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response2.json();
+
+      document.querySelector("#container").textContent = JSON.stringify(data);
+    });
+
+    const bucketName = "my-bucket";
+
+    const form2 = document.querySelector("#file");
+    form2.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const { files } = document.querySelector("#fileInput");
+      const file = files[0];
+      console.log(file);
+      const folderName = "uploads"
+      const fileName = `${Date.now()}_${file.name}`
+      const filePath = `${folderName}/${fileName}`;
+      const response = await fetch(
+        `${supabaseUrl}/storage/v1/object/${bucketName}/${filePath}`,
+        {
+          method: "put",
+          headers: {
+            apikey: supabaseAnonKey,
+            Authorization: `Bearer ${supabaseAnonKey}`,
+            "Content-Type": file.type,
+          },
+          body: file,
+        }
+      );
+      console.log(await response.json());
+
+      const response2 = await fetch(
+        `${supabaseUrl}/storage/v1/object/list/${bucketName}`,
+        {
+          method: "get",    //get에는 body가 없음
+          headers: {
+            apikey: supabaseAnonKey,
+            Authorization: `Bearer ${supabaseAnonKey}`,
+          },
+        }
+      );
+
+      const data = await response2.json();
+
+      document.querySelector("#container").textContent = JSON.stringify(data);
+    });
+  </script>
+</html>
