@@ -21,7 +21,7 @@ body {
     border-radius: 10px;
     position: relative; /* 배경을 위해 필요 */
     overflow: hidden; /* 넘치는 부분 가리기 */
-    box-shadow: 0px 0px 10px #ffd700;
+    box-shadow: 0px 0px 10px #8b6508;
 }
 
 .container::before {
@@ -40,7 +40,7 @@ body {
 
 .title {
     font-size: 32px;
-    text-shadow: 2px 2px 4px rgba(255, 215, 0, 0.8);
+    text-shadow: 2px 2px 4px #8b6508;
 }
 
 .subtitle {
