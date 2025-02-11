@@ -3,41 +3,60 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Supabase 2</title>
+    <title>Hogwarts Profile</title>
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <form id="user">
-      <section>
-        <label for="name">
-          <input type="text" name="name" />
-        </label>
-      </section>
-      <section>
-        <input type="file" id="avatar" />
-      </section>
-      <section>
-        <button>등록</button>
-      </section>
-    </form>
-    <main>
-        <section id="box"></section>
-        <button id="loading">불러오기</button>
+    <div class="container">
+      <h1 class="title">🪄 마법사 등록 페이지</h1>
+      <form id="user" class="form-container">
+        <section>
+          <label for="name">
+            <input type="text" name="name" placeholder="마법사 이름을 입력하세요..." required />
+          </label>
+        </section>
+        <section>
+          <input type="file" id="avatar" class="file-upload" accept="image/*" />
+          <label for="avatar" class="file-label">📂 파일 선택</label>
+          <span class="file-name">선택된 파일 없음</span>
+        </section>
+        <section>
+          <input type="submit" class="btn" value="등록" />
+        </section>
+      </form>
+
+      <main>
+        <h2 class="subtitle">📜 마법사 명단</h2>
+        <section id="box" class="profile-container"></section>
+        <br>
+        <button id="loading" class="btn">불러오기</button>
       </main>
+    </div>
+
     <script>
       const supabaseUrl = "https://fihzjbchghmobyvvdqjq.supabase.co";
-      const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZpaHpqYmNoZ2htb2J5dnZkcWpxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzkyMzM1MzIsImV4cCI6MjA1NDgwOTUzMn0.HZ-2a7VBqZpoQSrVZZmtWuoImMkVyMOStbTcnB7VvYw";
+      const supabaseAnonKey =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZpaHpqYmNoZ2htb2J5dnZkcWpxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzkyMzM1MzIsImV4cCI6MjA1NDgwOTUzMn0.HZ-2a7VBqZpoQSrVZZmtWuoImMkVyMOStbTcnB7VvYw";
       const folderName = "uploads";
       const bucketName = "my-bucket";
       const tableName = "MY_USER";
+
       async function makeUser() {
         const { files } = document.querySelector("#avatar");
+        if (files.length === 0) {
+          alert("파일을 선택해주세요!");
+          return;
+        }
+
         const file = files[0];
-        const fileName = `${Date.now()}_${file.name}`; // 안겹치려고 // uuid.
+        const fileName = `${Date.now()}_${file.name}`;
         const filePath = `${folderName}/${fileName}`;
+
+        // 파일 업로드
         const response = await fetch(
           `${supabaseUrl}/storage/v1/object/${bucketName}/${filePath}`,
           {
-            method: "put",
+            method: "PUT",
             headers: {
               apikey: supabaseAnonKey,
               Authorization: `Bearer ${supabaseAnonKey}`,
@@ -46,8 +65,10 @@
             body: file,
           }
         );
+
         console.log(await response.json());
-        // filename을 알아야함!
+
+        // DB에 저장
         const form = document.querySelector("#user");
         const formData = new FormData(form);
         const response2 = await fetch(`${supabaseUrl}/rest/v1/${tableName}`, {
@@ -63,18 +84,18 @@
             avatar: fileName,
           }),
         });
+
         console.log(await response2.json());
       }
 
-      document
-        .querySelector("#user")
-        .addEventListener("submit", async (event) => {
-          event.preventDefault();
-          await makeUser();
-        });
+      document.querySelector("#user").addEventListener("submit", async (event) => {
+        event.preventDefault();
+        await makeUser();
+      });
 
-        document.querySelector("#loading").addEventListener("click", async () => {
+      document.querySelector("#loading").addEventListener("click", async () => {
         const box = document.querySelector("#box");
+        box.innerHTML = ""; // 기존 목록 초기화
         const response = await fetch(`${supabaseUrl}/rest/v1/${tableName}`, {
           method: "GET",
           headers: {
@@ -82,21 +103,30 @@
             Authorization: `Bearer ${supabaseAnonKey}`,
             "Content-Type": "application/json",
           },
-          // Array 형태로 값이 나옴
         });
+
         const data = await response.json();
         for (const u of data) {
-          // u.name, u.avatar
           const tmp = document.createElement("div");
+          tmp.classList.add("profile-card");
+
           const img = document.createElement("img");
-          img.src = `${supabaseUrl}/storage/v1/object/public/${bucketName}/${folderName}/${u.avatar}`; // 나중에 가면 축약하거나 우리의 url로 덮어씌웁니다
+          img.src = `${supabaseUrl}/storage/v1/object/public/${bucketName}/${folderName}/${u.avatar}`;
           img.width = "240";
           tmp.appendChild(img);
+
           const title = document.createElement("h5");
           title.textContent = u.name ?? "이름없음";
           tmp.appendChild(title);
+
           box.appendChild(tmp);
         }
+      });
+
+      // 파일 선택 시 파일명 표시
+      document.querySelector("#avatar").addEventListener("change", function (event) {
+        const fileName = event.target.files.length ? event.target.files[0].name : "선택된 파일 없음";
+        document.querySelector(".file-name").textContent = fileName;
       });
     </script>
   </body>
