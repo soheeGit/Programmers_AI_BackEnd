@@ -13,10 +13,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>나의 페이지들</title>
     <style>
+        /* 기본 스타일 */
+        html {
+            font-size: 16px;
+        }
 
         body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(to top, #fbc2eb, #a6c1ee); /* 부드러운 파스텔 그라디언트 */
+            font-family: "Jua", sans-serif;
+            background: linear-gradient(to top, #fbc2eb, #a6c1ee);
             margin: 0;
             padding: 0;
             color: #333;
@@ -26,14 +30,11 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            font-family: "Jua", serif;
-            font-weight: 400;
-            font-style: normal;
         }
 
         h1 {
             font-size: 2.5rem;
-            color: #6a5acd; /* 부드러운 보라색 */
+            color: #6a5acd;
             margin-bottom: 50px;
             font-weight: 600;
         }
@@ -43,13 +44,13 @@
             flex-direction: column;
             align-items: center;
             gap: 20px;
-            width: 80%; /* 너비를 80%로 설정 */
-            max-width: 1000px; /* 최대 너비 설정 */
+            width: 80%;
+            max-width: 1000px;
         }
 
         .page-link {
             display: block;
-            background-color: #ffdde1; /* 파스텔 핑크 */
+            background-color: #ffdde1;
             color: #6a5acd;
             padding: 15px 30px;
             margin: 0;
@@ -58,14 +59,13 @@
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
-            width: 100%; /* 버튼을 컨테이너의 100%로 넓힘 */
-            max-width: 600px; /* 버튼의 최대 너비를 설정 */
+            width: 90%;
+            max-width: 500px;
             text-align: center;
         }
 
-
         .page-link:hover {
-            background-color: #ffb3c1; /* hover 시 밝은 핑크 */
+            background-color: #ffb3c1;
             color: #fff;
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
@@ -76,14 +76,31 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
 
+        /* 반응형 스타일 */
         @media (max-width: 768px) {
+            html {
+                font-size: 14px;
+            }
+
             h1 {
                 font-size: 2rem;
+                margin-bottom: 30px;
+            }
+
+            .page-link {
+                font-size: 1.3rem;
+                padding: 12px 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                gap: 10px;
             }
 
             .page-link {
                 font-size: 1.2rem;
-                width: 150px;
+                padding: 10px 15px;
             }
         }
     </style>
@@ -97,9 +114,8 @@
         <a href="programming/250122/index.html" class="page-link">플렉스, css, 웹폰트 실습</a>
         <a href="review/wordcup/wordcup.html" class="page-link">해리포터 이상형 월드컵</a>
         <a href="programming/250207/ex01/index.html" class="page-link">LLM을 활용한 memo</a>
-        <a href="review/llm/llm-project/docs/index.html" class="page-link">LLM을 활용한 스터디 과정 추천 웹 실습(image 생성 추가)</a>
+        <a href="review/llm/llm-project/docs/index.html" class="page-link">LLM을 활용한 스터디 과정 추천(image 생성 추가)</a>
         <a href="programming/250211/supabase2/index.html" class="page-link">마법사 등록 페이지 - supabase 실습</a>
-        <!-- <a href="page4.html" class="page-link">페이지 4</a> -->
     </div>
 
 </body>
