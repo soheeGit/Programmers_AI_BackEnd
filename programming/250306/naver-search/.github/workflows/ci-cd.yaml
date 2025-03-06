@@ -1,0 +1,76 @@
+name: Application Scheduler
+
+on:
+  schedule:
+    # 30분마다 실행
+    - cron: '*/30 * * * *'
+  # 수동 실행 옵션
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: '실행 모드'
+        required: true
+        default: 'PROD'
+        type: choice
+        options:
+          - PROD
+          - DEV
+      search_keyword:
+        description: '검색 키워드'
+        required: true
+        default: ''
+
+jobs:
+  build-and-run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 코드 체크아웃
+        uses: actions/checkout@v4
+
+      - name: JDK 설정
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Maven 캐시 설정
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      - name: Maven 빌드 및 종속성 다운로드
+        run: |
+          # Maven을 사용하여 프로젝트 빌드 및 종속성 다운로드
+          mvn clean compile
+
+      - name: Application 실행
+        env:
+          # GitHub Secrets에서 네이버 API 인증 정보 가져오기
+          NAVER_CLIENT_ID: ${{ secrets.NAVER_CLIENT_ID }}
+          NAVER_CLIENT_SECRET: ${{ secrets.NAVER_CLIENT_SECRET }}
+          # GitHub 변수에서 MODE와 SEARCH_KEYWORD 가져오기
+          # workflow_dispatch 이벤트일 경우 입력값 사용, 아닐 경우 저장소 변수 사용
+          MODE: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.mode || vars.MODE }}
+          SEARCH_KEYWORD: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.search_keyword || vars.SEARCH_KEYWORD }}
+        run: |
+          # Maven을 사용하여 애플리케이션 실행
+          # main 클래스를 Application으로 가정
+          mvn exec:java -Dexec.mainClass="Application"
+
+      - name: 변경사항 커밋 및 푸시
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "자동 실행 결과 업데이트: ${{ github.workflow }} at $(date +'%Y-%m-%d %H:%M:%S')"
+          commit_user_name: ${{ github.repository_owner }}
+          commit_user_email: ${{ github.repository_owner }}@users.noreply.github.com
+          commit_author: "${{ github.repository_owner }} <${{ github.repository_owner }}@users.noreply.github.com>"
+          # 변경된 파일만 커밋
+          add_options: '-A'
+          # 변경사항이 없으면 아무 작업도 하지 않음
+          skip_dirty_check: false
+          # GitHub에서 기본 제공하는 토큰 사용
+          token: ${{ github.token }}
