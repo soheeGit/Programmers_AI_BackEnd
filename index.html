@@ -16,26 +16,27 @@
         /* 기본 스타일 */
         html {
             font-size: 16px;
+            height: 100%;
         }
 
         body {
             font-family: "Jua", sans-serif;
-            background: linear-gradient(to top, #fbc2eb, #a6c1ee);
+            background: linear-gradient(to top, #fbc2eb, #a6c1ee) fixed;
             margin: 0;
-            padding: 0;
+            padding: 20px 0;
             color: #333;
             text-align: center;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
+            overflow-y: auto;
         }
 
         h1 {
             font-size: 2.5rem;
             color: #6a5acd;
-            margin-bottom: 50px;
+            margin: 20px 0 30px;
             font-weight: 600;
         }
 
@@ -46,6 +47,7 @@
             gap: 20px;
             width: 80%;
             max-width: 1000px;
+            padding-bottom: 40px;
         }
 
         .page-link {
@@ -84,7 +86,7 @@
 
             h1 {
                 font-size: 2rem;
-                margin-bottom: 30px;
+                margin-bottom: 20px;
             }
 
             .page-link {
@@ -96,6 +98,7 @@
         @media (max-width: 480px) {
             .container {
                 gap: 10px;
+                width: 95%;
             }
 
             .page-link {
@@ -117,7 +120,7 @@
         <a href="review/llm/llm-project/docs/index.html" class="page-link">LLM을 활용한 스터디 과정 추천(image 생성 추가)</a>
         <a href="programming/250211/supabase2/index.html" class="page-link">마법사 등록 페이지 - supabase 실습</a>
         <a href="https://naver-book-search.onrender.com/" class="page-link">naverAPI 기반 서블릿 실습</a>
-        <a href="https://today-taro-card.onrender.com/" class="page-link">나만의 타로카드 만들기 - LLM, 서블릿, supabase 실습</a>
+        <a href="https://today-taro-card.onrender.com/" class="page-link">나만의 타로카드 만들기-LLM, 서블릿, supabase</a>
     </div>
 
 </body>
