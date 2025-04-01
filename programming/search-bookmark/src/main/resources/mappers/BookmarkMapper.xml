@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- mapper 주의! -->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 인터페이스 형태로 구현된 Mapper 경로 -> 패키지 포함 -->
+<!-- 경로 참조/복사 > 참조 복사 (패키지 경로까지 포함) -->
+<mapper namespace="org.example.searchbookmark.model.mapper.BookmarkMapper">
+    <insert id="insertBookmark" parameterType="org.example.searchbookmark.model.vo.KeywordSearch">
+        INSERT INTO search_result_bookmark (title, link, description, date) values (#{title}, #{link}, #{description}, #{date})
+    </insert>
+</mapper>

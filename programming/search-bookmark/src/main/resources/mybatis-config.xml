@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${DB_DRIVER}"/>
+                <property name="url" value="${DB_URL}"/>
+                <property name="username" value="${DB_USERNAME}"/>
+                <property name="password" value="${DB_PASSWORD}"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <!-- resources 를 기준으로 해서 어느 경로에 있는지... -->
+        <mapper resource="mappers/BookmarkMapper.xml"/>
+    </mappers>
+</configuration>
