@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- mapper 주의! -->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 인터페이스 형태로 구현된 Mapper 경로 -> 패키지 포함 -->
+<!-- 경로 참조/복사 > 참조 복사 (패키지 경로까지 포함) -->
+<mapper namespace="org.example.mealisallyouneed.model.mapper.AnimeMapper">
+    <resultMap id="AnimeResultMap" type="org.example.mealisallyouneed.model.vo.Anime">
+        <!--        <id property="uuid" column="anime_id" />-->
+        <!--        <result property="title" column="title" />-->
+        <!--        <result property="description" column="description" />-->
+        <!--        <result property="createdAt" column="created_at" />-->
+        <!-- record는 setter가 없지롱! 생성자로 해야하지롱 -->
+        <constructor>
+            <arg column="anime_id" javaType="String" name="uuid" />
+            <arg column="title" javaType="String" name="title" />
+            <arg column="description" javaType="String" name="description" />
+            <arg column="created_at" javaType="String" name="createdAt" />
+            <!-- Wrapper 클래스 사용해주세요 -->
+            <arg column="votes" javaType="Integer" name="votes" />
+        </constructor>
+    </resultMap>
+    <!-- id는 연결할 메서드 이름 -->
+    <!-- createdAt은 자동 설정할 것 -->
+    <insert id="insertAnime" parameterType="org.example.mealisallyouneed.model.vo.Anime">
+        INSERT INTO animes (anime_id, title, description)
+        VALUES (#{uuid}, #{title}, #{description})
+    </insert>
+    <select id="getAllAnimes" resultMap="AnimeResultMap">
+        #         SELECT anime_id, title, description, created_at
+        SELECT anime_id, title, description,
+               date_add(a.created_at, INTERVAL 9 HOUR) AS created_at,
+               count(anime_vote_id) votes
+        FROM animes AS a
+                 -- JOIN anime_votes
+                 -- 그냥 조인시는 둘 다 있어야해
+                 -- animes가 중요해
+                 LEFT JOIN anime_votes
+                           USING (anime_id)
+        GROUP BY anime_id
+        ORDER BY created_at
+        -- ORDER BY created_at DESC;
+    </select>
+    <insert id="insertAnimeVote" parameterType="String">
+        INSERT INTO anime_votes (anime_id) VALUES (#{uuid})
+    </insert>
+</mapper>
