@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: boot-jsp
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+  profiles:
+    # 기본 실행 지정
+    active: dev
+  # JPA
+  datasource:
+    # JPA를 쓰는 경우에는 상대적으로 DB 종류의 구속을 안 받으려는 의미도 있음
+    # 그러니까 굳이 이걸 안가져가도 되는데...
+    # 근데 우리는 MySQL을 쓴다고 했으니까...
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      # 이것도 dev와 prod를 나눠가져가도 된다
+      ddl-auto: update # 개발 환경에서는 create-drop, 운영 환경에서는 validate 권장
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+    show-sql: true # 개발 환경에서 SQL 로그 확인
+    properties.hibernate.format_sql: true
