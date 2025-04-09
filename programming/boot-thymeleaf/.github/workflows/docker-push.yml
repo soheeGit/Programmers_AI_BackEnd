@@ -1,0 +1,64 @@
+name: Docker Image CI with Layer Caching
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      # GitHub에 올라간 내 프로젝트 코드를 작업 환경으로 가져오기
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        # 참고: https://github.com/actions/checkout
+
+      # Docker 환경 설정 (프로그램을 담는 컨테이너를 만드는 환경을 준비)
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        # 참고: https://github.com/docker/setup-buildx-action
+
+      # GitHub의 저장소(컨테이너를 보관하는 공간)에 로그인
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+        # 참고: https://github.com/docker/login-action
+
+      # Docker 이미지에 이름표(태그와 라벨)를 자동으로 붙여주는 과정
+      - name: Extract Docker metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{ github.repository }}
+        # 참고: https://github.com/docker/metadata-action
+
+      # Docker가 빠르게 작동하도록 이전 작업 내용을 기억하는 캐시 설정
+      - name: Cache Docker layers
+        uses: actions/cache@v4
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+        # 참고: https://docs.github.com/actions/using-workflows/caching-dependencies-to-speed-up-workflows
+
+      # 컨테이너 이미지(Docker 이미지)를 실제로 만들어서 저장소에 올리기
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache

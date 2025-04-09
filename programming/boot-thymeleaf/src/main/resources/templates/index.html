@@ -17,7 +17,39 @@
     </label>
     <button>제출</button>
 </form>
-<h2 th:text="${words}"></h2>
-
+<!--    <h2 th:text="${words}"></h2>-->
+<section>
+    <ul>
+        <!--            <li th:each="word : ${words}" th:text="${word}"></li>-->
+        <li th:each="word, iterStat : ${words}">
+            <!--                <p th:text="${iterStat.index}"></p>-->
+            <!--                <p th:text="${iterStat.count}"></p>-->
+            <!--                <p th:text="${iterStat.first}"></p>-->
+            <!--                <p th:text="${iterStat.last}"></p>-->
+            <span th:text="${word.getText()}"></span>
+            <span th:text="${word.getCreatedAt()}"></span>
+            <p th:if="${iterStat.last}">첫 단어입니다!</p>
+            <!--                <p th:if="${!iterStat.last}">첫 단어가 아닙니다!</p>-->
+            <p th:if="${!iterStat.last}">
+                <!--                    <span th:text="${#strings.substring(word.getText(), 0, 1)}"></span>-->
+                <!--                    <span th:text="${words[iterStat.index + 1].getText()}"></span>-->
+                <!--                    <span th:text="${#strings.substring(words[iterStat.index + 1].getText(), words[iterStat.index + 1].getText().length() - 1, words[iterStat.index + 1].getText().length())}"></span>-->
+                <span th:if="${#strings.substring(word.getText(), 0, 1).equals(#strings.substring(words[iterStat.index + 1].getText(), words[iterStat.index + 1].getText().length() - 1, words[iterStat.index + 1].getText().length()))}">성공!</span>
+            </p>
+            <form th:action="@{/update}" method="post">
+                <input type="hidden" th:name="uuid" th:value="${word.getUuid()}" />
+                <label>
+                    수정 :
+                    <input type="text" th:name="newWord"/>
+                </label>
+                <button>수정</button>
+            </form>
+            <form th:action="@{/delete}" method="post">
+                <input hidden="hidden" name="id" th:value="${word.getUuid()}"/>
+                <button>삭제</button>
+            </form>
+        </li>
+    </ul>
+</section>
 </body>
 </html>
