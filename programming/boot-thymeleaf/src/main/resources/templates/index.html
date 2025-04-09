@@ -1,16 +1,23 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
     <title>Hello World!</title>
 </head>
 <body>
-    <p th:text="${message}"></p>
-    <p th:text="${message2}"></p>
-    <form action="reset" method="post">
-        <button>리셋하기</button>
-    </form>
-  <h1>안녕!</h1>
-  <h2 th:text="${words}"></h2>
+<p th:text="${message}"></p>
+<!--    <p th:text="${message2}"></p>-->
+<form th:action="@{/reset}" method="post">
+    <button>리셋하기</button>
+</form>
+<h1>끝말잇기 하자!</h1>
+<!--  여기서의 th:object는 controller의 model을 통해서 전달 받아야함  -->
+<form method="post" th:action="@{/word}" th:object="${wordForm}">
+    <label>단어:
+        <input type="text" th:field="*{word}"/>
+    </label>
+    <button>제출</button>
+</form>
+<h2 th:text="${words}"></h2>
+
 </body>
 </html>
