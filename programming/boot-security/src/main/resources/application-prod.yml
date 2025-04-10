@@ -9,3 +9,9 @@ spring:
     user:
       name: ${SECURITY_NAME}
       password: ${SECURITY_PASSWORD}
+# 로깅 설정
+logging:
+  level:
+    #    org.example.bootsecurity.model.mapper: DEBUG # mapper 패키지의 로깅 레벨을 DEBUG로 설정 (DEV)
+    org.example.bootsecurity.model.mapper: ERROR # mapper 패키지의 로깅 레벨을 ERROR로 설정
+    # 너무 쓸데없는 많은 로그 방지
