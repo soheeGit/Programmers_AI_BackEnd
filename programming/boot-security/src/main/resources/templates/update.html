@@ -1,0 +1,24 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>메모 수정</title>
+</head>
+<body>
+<nav>
+    <a th:href="@{/}">홈으로</a>
+</nav>
+<p th:text="${msg}"></p>
+<section>
+    <form th:action="@{/update/{id}(id=${memo.id()})}" th:method="post">
+        <label>내용 :
+            <input th:name="text" th:value="${memo.text}">
+        </label>
+        <button>수정</button>
+    </form>
+</section>
+</body>
+</html>

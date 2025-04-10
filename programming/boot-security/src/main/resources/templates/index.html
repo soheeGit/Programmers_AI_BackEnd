@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>메모</title>
+</head>
+<body>
+    <nav>
+        <form method="post" th:action="@{/delete-all}"><button>전체삭제</button></form>
+        <a th:href="@{/add}">등록</a>
+    </nav>
+  <p th:text="${msg}"></p>
+    <ul>
+        <li th:each="memo : ${memoList}">
+            <span th:text="${memo.text}"></span>
+            <a th:href="@{/update/{id}(id=${memo.id()})}">수정</a>
+            <form th:method="post" th:action="@{/delete/{id}(id=${memo.id()})}">
+                <button>삭제</button>
+            </form>
+        </li>
+    </ul>
+</body>
+</html>

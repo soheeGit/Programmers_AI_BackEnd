@@ -1,0 +1,11 @@
+spring:
+  # 데이터베이스 연결 설정
+  datasource: # 여러 DBaaS에서 가져오기
+    url: ${MYSQL_URL} # 데이터베이스 URL
+    username: ${MYSQL_USER} # 데이터베이스 사용자 이름
+    password: ${MYSQL_PASSWORD} # 데이터베이스 비밀번호
+    driver-class-name: org.postgresql.Driver # PostgreSQL 드라이버 클래스 이름
+  security:
+    user:
+      name: ${SECURITY_NAME}
+      password: ${SECURITY_PASSWORD}
