@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>시큐리티 실습</title>
+</head>
+<body>
+<h2>로그인</h2>
+<form th:action="@{/login}" method="post">
+    <section>
+        <label>
+            유저이름 : <input th:name="username" required>
+        </label>
+    </section>
+    <section>
+        <label>
+            비밀번호 : <input type="password" th:name="password" required>
+        </label>
+    </section>
+    <button>로그인</button>
+</form>
+<section><a th:href="@{/join}">회원가입</a></section>
+</body>
+</html>
