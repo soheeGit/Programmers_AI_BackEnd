@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ko" th:lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>일지 목록</title>
+    <style th:replace="~{fragments/font :: font}"></style>
+</head>
+<body>
+<header>
+    <p th:text="${message}"></p>
+    <nav>
+        <ul>
+            <li>
+                <a th:href="@{diary/new}">일지 작성</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main>
+    <ol>
+        <li th:each="diary : ${list}">
+            <p th:text="${diary}"></p>
+        </li>
+    </ol>
+</main>
+</body>
+</html>

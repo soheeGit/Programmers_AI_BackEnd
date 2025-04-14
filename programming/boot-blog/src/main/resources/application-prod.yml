@@ -1,0 +1,23 @@
+server:
+  port: 8080
+spring:
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        show_sql: true
+        format_sql: true
+    hibernate:
+      ddl-auto: none
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${MYSQL_URL}
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
+  aws:
+    s3:
+      bucketName: ${STORAGE_BUCKET_NAME}
+      region: ${STORAGE_REGION}
+      url: ${STORAGE_URL}
+      accessKey: ${STORAGE_AK}
+      secretKey: ${STORAGE_SK}

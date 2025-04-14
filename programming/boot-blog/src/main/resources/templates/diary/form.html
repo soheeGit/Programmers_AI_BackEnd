@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ko" th:lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>일지 생성</title>
+    <style th:replace="~{fragments/font :: font}"></style>
+    <style>
+        header {
+            margin-bottom: 24px;
+        }
+        section form {
+            display: flex;
+            flex-direction: column;
+            max-width: 480px;
+            gap: 12px;
+        }
+        section form * {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <p th:text="${message}"></p>
+    <a th:href="@{/diary}">목록 보기</a>
+</header>
+<section>
+    <!--        <form th:action="@{/diary/new}" th:object="${form}" th:method="post">-->
+    <form th:action="@{/diary/new}" th:object="${form}" th:method="post" enctype="multipart/form-data">
+        <label>
+            제목 : <input type="text" th:field="*{title}">
+        </label>
+        <label>
+            내용 : <textarea th:field="*{content}"></textarea>
+        </label>
+        <label>
+            이미지 : <input type="file" th:field="*{imageFile}">
+        </label>
+        <button>기록</button>
+    </form>
+</section>
+</body>
+</html>
