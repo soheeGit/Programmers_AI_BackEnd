@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: boot-api
+  # 데이터소스
+  profiles:
+    active: dev

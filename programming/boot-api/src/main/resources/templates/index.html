@@ -1,0 +1,11 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/common :: head}"></head>
+<body>
+<p th:text="${message}"></p>
+<nav>
+  <a th:href="@{/diary}">일기 목록</a>
+  <a th:href="@{/diary/new}">일기 생성</a>
+</nav>
+</body>
+</html>

@@ -1,0 +1,13 @@
+@font-face {
+    font-family: 'DAEHWA_Bold';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2502-1@1.0/DAEHWA_Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+* {
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: 'DAEHWA_Bold', sans-serif;
+}

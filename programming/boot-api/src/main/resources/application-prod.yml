@@ -1,0 +1,32 @@
+server:
+  port: 8080 # 충돌 문제 시 수정
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create # 배포 시는 none 또는 validate 추천
+    # MYSQL용 설정
+    #    properties:
+    #      hibernate:
+    #        dialect: org.hibernate.dialect.MySQL8Dialect
+    #        show_sql: true
+    #        format_sql: true
+    #  datasource:
+    #    driver-class-name: com.mysql.cj.jdbc.Driver # mysql
+    #    url: ${MYSQL_URL}
+    #    username: ${MYSQL_USERNAME}
+    #    password: ${MYSQL_PASSWORD}
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect # PostgreSQL dialect로 변경
+        show_sql: true
+        format_sql: true
+  datasource:
+    driver-class-name: org.postgresql.Driver # PostgreSQL 드라이버로 변경
+    url: ${POSTGRES_URL} # PostgreSQL URL로 변경
+    username: ${POSTGRES_USERNAME} # PostgreSQL 사용자 이름으로 변경
+    password: ${POSTGRES_PASSWORD} # PostgreSQL 비밀번호로 변경
+# 객체 스토리지
+supabase:
+  url: ${SUPABASE_URL}
+  bucket-name: ${SUPABASE_BUCKET_NAME}
+  access-key: ${SUPABASE_ACCESS_KEY}

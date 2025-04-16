@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/common :: head}"></head>
+<body>
+<p th:text="${message}"></p>
+<p th:if="${result}" th:text="${result}"></p>
+<nav>
+    <a th:href="@{/diary/new}">일기 생성</a>
+</nav>
+<section style="padding: 2rem;">
+    <div style="display: flex; padding: 1rem; margin: 1rem; border: 1px solid gray; border-radius: 1rem" th:each="el : ${list}">
+        <div style="width: 120px" th:if="${el.filename}">
+            <img style="width: 100%" th:src="@{/file/{filename}(filename=${el.filename})}" th:alt="이미지">
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 1rem; padding: 1rem">
+            <h3 th:text="${el.title}"></h3>
+            <h4 th:text="${el.createdAt}"></h4>
+            <p th:text="${el.content}"></p>
+            <section>
+                <a th:href="@{/diary/edit/{id}(id=${el.id})}">수정</a>
+                <form th:action="@{/diary/delete}" method="post">
+                    <input type="hidden" name="id" th:value="${el.id}">
+                    <button>삭제</button>
+                </form>
+            </section>
+        </div>
+    </div>
+</section>
+</body>
+</html>

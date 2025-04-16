@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/common :: head}"></head>
+<body>
+<p th:text="${message}"></p>
+<nav>
+    <a th:href="@{/diary}">일기 목록</a>
+</nav>
+<section>
+    <form th:action="@{/diary/edit/{id}(id=${id})}" method="post" th:object="${form}" enctype="multipart/form-data" style="display: flex; flex-direction: column; gap: 1rem;">
+        <label>제목 : <input th:field="*{title}" required></label>
+        <label>내용 : <textarea th:field="*{content}" required></textarea></label>
+        <label>파일 : <input type="file" th:field="*{file}" ></label>
+        <button>수정</button>
+    </form>
+</section>
+</body>
+</html>
