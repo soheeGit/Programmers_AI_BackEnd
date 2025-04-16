@@ -14,10 +14,10 @@ spring:
     url: ${MYSQL_URL}
     username: ${MYSQL_USERNAME}
     password: ${MYSQL_PASSWORD}
-  aws:
-    s3:
-      bucketName: ${STORAGE_BUCKET_NAME}
-      region: ${STORAGE_REGION}
-      url: ${STORAGE_URL}
-      accessKey: ${STORAGE_AK}
-      secretKey: ${STORAGE_SK}
+aws:
+  s3:
+    bucketName: ${STORAGE_BUCKET_NAME}
+    region: ${STORAGE_REGION}
+    url: ${STORAGE_URL}
+    accessKey: ${STORAGE_AK}
+    secretKey: ${STORAGE_SK}

@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title th:text="${title}"></title>
+</head>
+<body>
+<h1 th:text="${message}"></h1>
+<!-- security -> csrf -->
+<form th:action="@{/blog/new}" th:object="${form}" method="post" enctype="multipart/form-data">
+    <section>
+        <label>
+            제목 : <input type="text" th:field="*{title}" required>
+        </label>
+    </section>
+    <section>
+        <label>
+            내용 : <textarea th:field="*{content}" required></textarea>
+        </label>
+    </section>
+    <section>
+        <label>
+            이미지 : <input type="file" th:field="*{imageFile}" required>
+        </label>
+    </section>
+    <section>
+        <button>생성</button>
+    </section>
+</form>
+</body>
+</html>

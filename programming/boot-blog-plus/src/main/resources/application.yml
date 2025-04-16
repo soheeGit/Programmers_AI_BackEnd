@@ -1,0 +1,11 @@
+spring:
+#  thymeleaf:
+#    prefix: classpath:/templates/page/
+  application:
+    name: boot-blog-plus
+  profiles:
+    active: dev
+  security:
+    user:
+      name: hello
+      password: world

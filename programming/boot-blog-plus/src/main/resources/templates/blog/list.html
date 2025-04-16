@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title th:text="${title}"></title>
+</head>
+<body>
+<section>
+    <div th:each="article : ${list}">
+        <h1 th:text="${article.title}"></h1>
+        <p th:text="${article.content}"></p>
+        <section>
+            <img th:src="${article.imageUrl}" th:alt="${article.title}">
+        </section>
+    </div>
+</section>
+<a th:href="@{/blog/new}">작성</a>
+</body>
+</html>
