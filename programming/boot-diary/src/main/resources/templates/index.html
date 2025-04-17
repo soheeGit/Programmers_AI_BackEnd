@@ -1,0 +1,40 @@
+<!doctype html>
+<!-- x ml ns th ~ -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        @font-face {
+            font-family: 'SBAggroB';
+            src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SBAggroB.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: SBAggroB, sans-serif;
+        }
+    </style>
+    <title th:text="${title}"></title>
+</head>
+<body>
+<header style="padding: 1rem;">
+    <h1 style="padding-bottom: 1rem" th:text="${message}">메시지</h1>
+    <nav>
+        <a th:href="@{/article}">글 목록</a>
+        <a th:href="@{/article/new}">글 작성</a>
+    </nav>
+</header>
+<section style="margin: auto; padding: 1rem; max-width: 768px;">
+    <figure style="display: flex;">
+        <img style="width: 100%; aspect-ratio: 1;" th:src="${frontImage}" alt="대문 이미지">
+    </figure>
+</section>
+</body>
+</html>

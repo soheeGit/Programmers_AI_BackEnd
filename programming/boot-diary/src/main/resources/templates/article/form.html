@@ -1,0 +1,58 @@
+<!doctype html>
+<!-- x ml ns th ~ -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        @font-face {
+            font-family: 'SBAggroB';
+            src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SBAggroB.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: SBAggroB, sans-serif;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+    </style>
+    <title th:text="${title}"></title>
+</head>
+<body>
+<header style="padding: 1rem;">
+    <h1 style="padding-bottom: 1rem" th:text="${message}">메시지</h1>
+    <nav>
+        <a th:href="@{/}">홈</a>
+        <a th:href="@{/article}">글 목록</a>
+    </nav>
+</header>
+<section style="margin: auto; padding: 1rem; max-width: 768px;">
+    <form th:object="${form}" th:method="post" enctype="multipart/form-data">
+        <label>
+            제목 : <input type="text" th:field="*{title}" required>
+        </label>
+        <label>
+            내용 : <textarea th:field="*{content}" required></textarea>
+        </label>
+        <label>
+            <!-- 파일 : <input type="file" th:field="*{file}" required> -->
+            파일 : <input type="file" th:field="*{file}" accept="image/*">
+            <!-- 꼭 필수는 아니지만 이미지만 업로드할 수 있게 HTML 단에서 제약 -->
+        </label>
+        <!-- TIL : lint -->
+        <button th:unless="${edit}">작성</button>
+        <button th:if="${edit}">수정</button>
+    </form>
+</section>
+</body>
+</html>
