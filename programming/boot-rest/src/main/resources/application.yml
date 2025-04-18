@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: boot-rest
+  profiles:
+    active: dev
+  # 커넥션 풀
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      maximum-pool-size: 10 # 최대 커넥션 수
+      minimum-idle: 5 # 최소 유휴 커넥션 수
+  # MyBatis 설정
+  mybatis:
+    #    mapper-locations: classpath:mapper/*.xml # 매퍼 XML 파일 위치 설정
+    type-aliases-package: org.example.bootrest.model.domain # 도메인 객체 패키지 경로
+    configuration:
+      map-underscore-to-camel-case: true # 언더스코어 표기법을 카멜 케이스 표기법으로 자동 변환

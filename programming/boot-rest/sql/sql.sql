@@ -1,0 +1,8 @@
+CREATE TABLE animal (
+    uuid VARCHAR(36) NOT NULL DEFAULT (UUID()),
+    name VARCHAR(255) NOT NULL,
+    description VARCHAR(255) NOT NULL,
+    story VARCHAR(255) NOT NULL,
+    createdAt DATETIME NOT NULL DEFAULT (UTC_TIMESTAMP()),
+    PRIMARY KEY (uuid)
+);

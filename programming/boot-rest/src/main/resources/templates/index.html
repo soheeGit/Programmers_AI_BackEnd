@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>생명체 만들기</title>
+    <style>
+        @font-face {
+            font-family: 'Ownglyph_corncorn-Rg';
+            src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2412-1@1.0/Ownglyph_corncorn-Rg.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Ownglyph_corncorn-Rg', sans-serif;
+            padding: 1rem;
+        }
+        section {
+            max-width: 576px;
+        }
+        #animal-form {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            padding: 1rem;
+        }
+        input, textarea {
+            width: 100%;
+            resize: none;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>당신만의 생물체를 만들어보세요</h1>
+</header>
+<section id="animal-form-container">
+    <form id="animal-form">
+        <label>이름 : <input id="animal-name"></label>
+        <label>설명 : <textarea id="animal-desc"></textarea></label>
+        <button>생성</button>
+    </form>
+</section>
+<section id="animal-list">
+
+</section>
+<script>
+    const animalForm = document.querySelector('#animal-form');
+    animalForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const name = document.querySelector('#animal-name').value;
+        const description = document.querySelector('#animal-desc').value;
+        const response = await fetch("/api/animals",  {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                    name, description,
+            })
+        });
+        console.log(response.status);
+        if(response.status !== 201) {
+            alert("잘못된 입력!");
+        }
+    })
+
+    const animalList = document.querySelector('#animal-list');
+    const response = await fetch('/api/animals', {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    animalList.innerHTML = JSON.stringify(await response.json());
+</script>
+</body>
+</html>
