@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: boot-rest-api
+  profiles:
+    active: dev

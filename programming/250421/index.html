@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<h1>비동기 REST API 처리</h1>
+<section>
+    <form id="recipe-form" style="display: flex; flex-direction: column">
+        <label>이름 : <input id="recipe-name"></label>
+        <label>설명 : <input id="recipe-desc"></label>
+        <button>등록</button>
+    </form>
+</section>
+<section>
+    <article id="recipe-list">
+
+    </article>
+</section>
+<script>
+    const recipeForm = document.querySelector('#recipe-form');
+    const recipeName = document.querySelector('#recipe-name');
+    const recipeDesc = document.querySelector('#recipe-desc');
+    const recipeList = document.querySelector('#recipe-list');
+    fetchRecipeList();
+    recipeForm.addEventListener('submit', async (evt) => {
+        evt.preventDefault();
+        await fetch('http://localhost:8080/api/recipe', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: recipeName.value,
+                description: recipeDesc.value,
+            })
+        });
+        await fetchRecipeList();
+    });
+    async function fetchRecipeList() {
+        const response = await fetch('http://localhost:8080/api/recipe');
+        const json = await response.json();
+        recipeList.innerHTML = JSON.stringify(json);
+    }
+</script>
+</body>
+</html>
