@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        @font-face {
+            font-family: 'CookieRun-Regular';
+            src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/CookieRun-Regular.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'CookieRun-Regular', serif;
+        }
+    </style>
+</head>
+<body>
+<h1>JWT 실습해봅시다 :)</h1>
+<p th:text="${jwt}"></p>
+<section>
+    <form id="test">
+        <label><input id="jwt"></label>
+        <button>검증</button>
+    </form>
+</section>
+<script>
+    const form = document.getElementById('test');
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const jwt = document.getElementById('jwt').value;
+        const response = await fetch(
+            'http://localhost:8080/api/test',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    token: jwt
+                })
+            });
+        if (response.ok) {
+            alert("성공!")
+        } else {
+            alert("실패!")
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+server:
+  port: 8080 # 충돌 문제 시 수정
+spring:
+  jpa:
+    hibernate:
+      # ddl-auto: create # 배포 시는 none 또는 validate 추천
+      ddl-auto: none
+    properties:
+      hibernate:
+        # dialect: org.hibernate.dialect.MySQL8Dialect
+        dialect: org.hibernate.dialect.PostgreSQLDialect # PostgreSQL
+        show_sql: true
+        format_sql: true
+  datasource:
+    # driver-class-name: com.mysql.cj.jdbc.Driver # MySQL
+    driver-class-name: org.postgresql.Driver # PostgreSQL
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+# 객체 스토리지
+supabase:
+  url: ${SUPABASE_URL}
+  access-key: ${SUPABASE_ACCESS_KEY}
+  pdf-bucket-name: ${SUPABASE_PDF_BUCKET_NAME}
+  sheet-bucket-name: ${SUPABASE_SHEET_BUCKET_NAME}
+  img-bucket-name: ${SUPABASE_IMG_BUCKET_NAME}
+# Swagger
+# 여러 가지 설정 on-off 및 dev, prod 분기
+springdoc:
+  swagger-ui:
+    # enabled: true # 개발 환경에선
+    enabled: false # 배포 환경에선
+  api-docs:
+    # enabled: true # 개발 환경에선
+    enabled: false # 배포 환경에선
