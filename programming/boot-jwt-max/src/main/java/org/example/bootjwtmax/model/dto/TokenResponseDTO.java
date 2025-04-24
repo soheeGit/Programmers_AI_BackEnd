@@ -1,0 +1,6 @@
+package org.example.bootjwtmax.model.dto;
+
+// 일반적으로 응답은 죄다 JSON이라서...
+// Refresh Token, Expired Date 등의 부가적 정보를 제공하고 싶을 때....
+public record TokenResponseDTO(String accessToken) {
+}
