@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <section>
+        <form id="api1">
+            <button>공개 API</button>
+        </form>
+        <a href="http://localhost:8080/oauth2/authorization/kakao">카카오로 로그인</a>
+        <!-- <form id="login">
+            <button>소셜 로그인</button>
+        </form> -->
+        <form id="api2">
+            <button>비공개 API</button>
+        </form>
+    </section>
+    <script>
+        async function api1() {
+            alert("공개 API 호출");
+            const url = "http://localhost:8080"
+            const response = await fetch(`${url}/api/test/hello`, {
+                // method: "GET",
+                headers: {
+                    "Content-Type": "application/json",   
+                }
+            });
+            const data = await response.json();
+            alert(JSON.stringify(data));
+        }
+        const form1 = document.querySelector("#api1");
+        form1.addEventListener("submit", async (e) => {
+            e.preventDefault(); 
+            await api1();
+        });
+        async function api2() {
+            alert("비공개 API 호출");
+            const url = "http://localhost:8080"
+            const response = await fetch(`${url}/api/data/hello`, {
+                // method: "GET",
+                headers: {
+                    "Content-Type": "application/json",   
+                }
+            });
+            const data = await response.json();
+            alert(JSON.stringify(data));
+        }
+        const form2 = document.querySelector("#api2");
+        form2.addEventListener("submit", async (e) => {
+            e.preventDefault(); 
+            await api2();
+        });
+        document.addEventListener("DOMContentLoaded", async () => {
+            const params = new URLSearchParams(window.location.search);
+            const token = params.get("token");
+            if (token) {
+                alert("토큰 있네!");
+                alert(token);
+                alert("이건 내가 저장해줄께!");
+                localStorage.setItem("token", token);
+                const cleanUrl = window.location.href.split("?")[0];
+                window.location.replace(cleanUrl);
+            }
+        });
+    </script>
+</body>
+</html>
