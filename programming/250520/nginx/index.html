@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hogwarts Legacy - The Wizarding World</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Raleway:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <style>
+    :root {
+      --primary-color: #7335FF;
+      --primary-light: #9478FF;
+      --primary-dark: #631BFF;
+      --gryffindor: #740001;
+      --hufflepuff: #ECB939;
+      --ravenclaw: #0E1A40;
+      --slytherin: #1A472A;
+      --dark-bg: #121212;
+      --dark-card: #1E1E1E;
+      --dark-card-hover: #2A2A2A;
+      --text-light: #F8F8F8;
+      --text-dimmed: #AAAAAA;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Raleway', sans-serif;
+      background-color: var(--dark-bg);
+      color: var(--text-light);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Header styles */
+    header {
+      padding: 1.5rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      margin-bottom: 2rem;
+    }
+
+    .header-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .logo {
+      width: 50px;
+      height: 50px;
+      transition: transform 0.3s ease;
+    }
+
+    .logo:hover {
+      transform: rotate(12deg);
+    }
+
+    .site-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary-light);
+      letter-spacing: 1px;
+    }
+
+    nav ul {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    nav a {
+      color: var(--text-light);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      padding-bottom: 0.25rem;
+      border-bottom: 2px solid transparent;
+      transition: all 0.3s ease;
+    }
+
+    nav a:hover {
+      color: var(--primary-light);
+      border-bottom: 2px solid var(--primary-light);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text-light);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .mobile-menu {
+      display: none;
+      position: absolute;
+      right: 20px;
+      top: 70px;
+      background-color: var(--dark-card);
+      border-radius: 8px;
+      padding: 1rem;
+      min-width: 200px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+      z-index: 100;
+    }
+
+    .mobile-menu a {
+      display: block;
+      padding: 0.75rem 1rem;
+      color: var(--text-light);
+      text-decoration: none;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+      border-radius: 6px;
+    }
+
+    .mobile-menu a:hover {
+      background-color: var(--dark-card-hover);
+      color: var(--primary-light);
+    }
+
+    /* Hero section */
+    .hero {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 4rem;
+      height: 500px;
+    }
+
+    .hero-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.7);
+    }
+
+    .hero-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 3rem;
+      background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+    }
+
+    .hero-title {
+      font-family: 'Cinzel', serif;
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      max-width: 800px;
+    }
+
+    .hero-text {
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+      max-width: 700px;
+      opacity: 0.9;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      padding: 0.8rem 1.5rem;
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .cta-btn:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+
+    /* Section headers */
+    .section-title {
+      font-family: 'Cinzel', serif;
+      font-size: 2rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      color: var(--text-light);
+    }
+
+    /* Houses section */
+    .houses-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 4rem;
+    }
+
+    .house-card {
+      background-color: var(--dark-card);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .house-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    .house-card.gryffindor {
+      border-top: 4px solid var(--gryffindor);
+    }
+
+    .house-card.hufflepuff {
+      border-top: 4px solid var(--hufflepuff);
+    }
+
+    .house-card.ravenclaw {
+      border-top: 4px solid var(--ravenclaw);
+    }
+
+    .house-card.slytherin {
+      border-top: 4px solid var(--slytherin);
+    }
+
+    .house-img-container {
+      height: 160px;
+      background-color: #0A0A0A;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .house-img {
+      height: 80%;
+      width: auto;
+      object-fit: contain;
+      transition: transform 0.3s ease;
+    }
+
+    .house-card:hover .house-img {
+      transform: scale(1.05);
+    }
+
+    .house-content {
+      padding: 1.5rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .house-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .house-title.gryffindor {
+      color: #FF5E5B;
+    }
+
+    .house-title.hufflepuff {
+      color: var(--hufflepuff);
+    }
+
+    .house-title.ravenclaw {
+      color: #5EADF0;
+    }
+
+    .house-title.slytherin {
+      color: #5CDB95;
+    }
+
+    .house-description {
+      margin-bottom: 1.5rem;
+      flex-grow: 1;
+    }
+
+    .house-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto;
+    }
+
+    .house-founder {
+      font-size: 0.875rem;
+      color: var(--text-dimmed);
+    }
+
+    .house-link {
+      color: var(--primary-light);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .house-link:hover {
+      transform: rotate(12deg);
+    }
+
+    /* Characters section */
+    .characters-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-bottom: 4rem;
+    }
+
+    .character-card {
+      background-color: var(--dark-card);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .character-card:hover {
+      box-shadow: 0 0 20px rgba(115, 65, 255, 0.2);
+    }
+
+    .character-img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .character-card:hover .character-img {
+      transform: scale(1.05);
+    }
+
+    .character-content {
+      padding: 1.5rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .character-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .character-subtitle {
+      font-size: 0.875rem;
+      color: var(--text-dimmed);
+      margin-bottom: 1rem;
+    }
+
+    .character-tags {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+
+    .character-tag {
+      padding: 0.25rem 0.75rem;
+      font-size: 0.75rem;
+      border-radius: 999px;
+      font-weight: 600;
+    }
+
+    .character-tag.house {
+      background-color: var(--gryffindor);
+      color: white;
+    }
+
+    .character-tag.role {
+      background-color: rgba(255,255,255,0.1);
+      color: white;
+    }
+
+    .character-description {
+      margin-bottom: 1.5rem;
+      flex-grow: 1;
+    }
+
+    .character-btn {
+      width: 100%;
+      padding: 0.75rem;
+      background-color: var(--dark-card-hover);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .character-btn:hover {
+      background-color: rgba(255,255,255,0.15);
+    }
+
+    /* Spells section */
+    .spells-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 4rem;
+    }
+
+    .spell-card {
+      background-color: var(--dark-card);
+      border-radius: 8px;
+      padding: 1.5rem;
+      transition: background-color 0.3s ease;
+    }
+
+    .spell-card:hover {
+      background-color: var(--dark-card-hover);
+    }
+
+    .spell-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+      color: var(--primary-light);
+    }
+
+    .spell-type {
+      font-style: italic;
+      color: var(--text-dimmed);
+      margin-bottom: 1rem;
+    }
+
+    /* Newsletter section */
+    .newsletter {
+      background-color: var(--dark-card);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bg-icon {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 33%;
+      height: 100%;
+      opacity: 0.05;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .bg-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .newsletter-content {
+      position: relative;
+      z-index: 1;
+      max-width: 600px;
+    }
+
+    .newsletter-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .newsletter-text {
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+      opacity: 0.9;
+    }
+
+    .newsletter-form {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .newsletter-input {
+      flex-grow: 1;
+      padding: 0.75rem 1rem;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      background-color: rgba(255,255,255,0.05);
+      color: var(--text-light);
+      font-family: 'Raleway', sans-serif;
+    }
+
+    .newsletter-input:focus {
+      outline: none;
+      border-color: var(--primary-light);
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding: 2rem 0;
+      text-align: center;
+    }
+
+    .footer-content {
+      opacity: 0.7;
+      font-size: 0.875rem;
+    }
+
+    /* Responsive styles */
+    @media (max-width: 768px) {
+      .desktop-nav {
+        display: none;
+      }
+
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      .hero-title {
+        font-size: 1.8rem;
+      }
+
+      .hero-text {
+        font-size: 1rem;
+      }
+
+      .newsletter-form {
+        flex-direction: column;
+      }
+
+      .section-title {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="header-inner">
+        <div class="logo-container">
+          <img src="https://cdn-icons-png.flaticon.com/512/1295/1295099.png" alt="Hogwarts Logo" class="logo">
+          <h1 class="site-title">Hogwarts Legacy</h1>
+        </div>
+        <nav class="desktop-nav">
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Characters</a></li>
+            <li><a href="#">Houses</a></li>
+            <li><a href="#">Spells</a></li>
+            <li><a href="#">Movies</a></li>
+            <li><a href="#">Books</a></li>
+          </ul>
+        </nav>
+        <button class="mobile-menu-btn" id="menuBtn">
+          <span class="material-symbols-outlined">menu</span>
+        </button>
+        <div class="mobile-menu" id="mobileMenu">
+          <a href="#">Home</a>
+          <a href="#">Characters</a>
+          <a href="#">Houses</a>
+          <a href="#">Spells</a>
+          <a href="#">Movies</a>
+          <a href="#">Books</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero">
+      <img src="https://images.unsplash.com/photo-1547756536-cde3673fa2e5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MzkyNDZ8MHwxfHNlYXJjaHwxfHxob2d3YXJ0c3xlbnwwfHx8fDE3NDc3MjE3MDR8MA&ixlib=rb-4.1.0&q=80&w=1080" alt="Hogwarts Castle" class="hero-img">
+      <div class="hero-content">
+        <h2 class="hero-title">Welcome to the Magical World of Harry Potter</h2>
+        <p class="hero-text">Explore the enchanting universe of wizards, spells, and magical creatures that have captivated millions around the globe.</p>
+        <a href="#" class="cta-btn">Begin Your Journey</a>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">Explore Hogwarts Houses</h2>
+      <div class="houses-grid">
+        <div class="house-card gryffindor">
+          <div class="house-img-container">
+            <img src="/api/placeholder/250/160" alt="Gryffindor" class="house-img">
+          </div>
+          <div class="house-content">
+            <h3 class="house-title gryffindor">Gryffindor</h3>
+            <p class="house-description">Home to the brave and chivalrous. Notable members include Harry Potter, Hermione Granger, and Ron Weasley.</p>
+            <div class="house-footer">
+              <span class="house-founder">Founder: Godric Gryffindor</span>
+              <span class="material-symbols-outlined house-link">north_east</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="house-card hufflepuff">
+          <div class="house-img-container">
+            <img src="/api/placeholder/250/160" alt="Hufflepuff" class="house-img">
+          </div>
+          <div class="house-content">
+            <h3 class="house-title hufflepuff">Hufflepuff</h3>
+            <p class="house-description">Known for their loyalty, patience, and hard work. Notable members include Cedric Diggory and Newt Scamander.</p>
+            <div class="house-footer">
+              <span class="house-founder">Founder: Helga Hufflepuff</span>
+              <span class="material-symbols-outlined house-link">north_east</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="house-card ravenclaw">
+          <div class="house-img-container">
+            <img src="/api/placeholder/250/160" alt="Ravenclaw" class="house-img">
+          </div>
+          <div class="house-content">
+            <h3 class="house-title ravenclaw">Ravenclaw</h3>
+            <p class="house-description">Values intelligence, knowledge, and wit. Notable members include Luna Lovegood and Cho Chang.</p>
+            <div class="house-footer">
+              <span class="house-founder">Founder: Rowena Ravenclaw</span>
+              <span class="material-symbols-outlined house-link">north_east</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="house-card slytherin">
+          <div class="house-img-container">
+            <img src="/api/placeholder/250/160" alt="Slytherin" class="house-img">
+          </div>
+          <div class="house-content">
+            <h3 class="house-title slytherin">Slytherin</h3>
+            <p class="house-description">Emphasizes ambition, cunning, and resourcefulness. Notable members include Draco Malfoy and Severus Snape.</p>
+            <div class="house-footer">
+              <span class="house-founder">Founder: Salazar Slytherin</span>
+              <span class="material-symbols-outlined house-link">north_east</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">Featured Characters</h2>
+      <div class="characters-grid">
+        <div class="character-card">
+          <img src="/api/placeholder/320/250" alt="Harry Potter" class="character-img">
+          <div class="character-content">
+            <h3 class="character-title">Harry Potter</h3>
+            <p class="character-subtitle">The Boy Who Lived</p>
+            <div class="character-tags">
+              <span class="character-tag house">Gryffindor</span>
+              <span class="character-tag role">Seeker</span>
+            </div>
+            <p class="character-description">The main protagonist of the series, known for his lightning-shaped scar and his battle against Lord Voldemort.</p>
+            <button class="character-btn">Read More</button>
+          </div>
+        </div>
+
+        <div class="character-card">
+          <img src="/api/placeholder/320/250" alt="Hermione Granger" class="character-img">
+          <div class="character-content">
+            <h3 class="character-title">Hermione Granger</h3>
+            <p class="character-subtitle">The Brightest Witch of Her Age</p>
+            <div class="character-tags">
+              <span class="character-tag house">Gryffindor</span>
+              <span class="character-tag role">Prefect</span>
+            </div>
+            <p class="character-description">Known for her intelligence and logical thinking, Hermione is one of Harry's best friends and a crucial ally.</p>
+            <button class="character-btn">Read More</button>
+          </div>
+        </div>
+
+        <div class="character-card">
+          <img src="/api/placeholder/320/250" alt="Ron Weasley" class="character-img">
+          <div class="character-content">
+            <h3 class="character-title">Ron Weasley</h3>
+            <p class="character-subtitle">Harry's Loyal Friend</p>
+            <div class="character-tags">
+              <span class="character-tag house">Gryffindor</span>
+              <span class="character-tag role">Keeper</span>
+            </div>
+            <p class="character-description">Harry's best friend from a pure-blood wizarding family, Ron provides comic relief and steadfast loyalty throughout the series.</p>
+            <button class="character-btn">Read More</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">Popular Spells</h2>
+      <div class="spells-grid">
+        <div class="spell-card">
+          <h3 class="spell-title">Expecto Patronum</h3>
+          <p class="spell-type">The Patronus Charm</p>
+          <p>Conjures a spirit guardian that protects against Dementors and can send messages.</p>
+        </div>
+        
+        <div class="spell-card">
+          <h3 class="spell-title">Expelliarmus</h3>
+          <p class="spell-type">The Disarming Charm</p>
+          <p>Forces the victim to release whatever they're holding. Harry's signature spell.</p>
+        </div>
+        
+        <div class="spell-card">
+          <h3 class="spell-title">Wingardium Leviosa</h3>
+          <p class="spell-type">The Levitation Charm</p>
+          <p>Makes objects fly or levitate. The first spell taught at Hogwarts.</p>
+        </div>
+        
+        <div class="spell-card">
+          <h3 class="spell-title">Accio</h3>
+          <p class="spell-type">The Summoning Charm</p>
+          <p>Summons an object toward the caster, potentially over great distances.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="newsletter">
+      <div class="bg-icon">
+        <img src="https://cdn-icons-png.flaticon.com/512/1295/1295099.png" alt="Harry Potter Logo">
+      </div>
+      <div class="newsletter-content">
+        <h2 class="newsletter-title">Join the Wizarding World</h2>
+        <p class="newsletter-text">Subscribe to our newsletter to get the latest news about the wizarding world, exclusive content, and special offers.</p>
+        <div class="newsletter-form">
+          <input type="email" placeholder="Enter your email address" class="newsletter-input">
+          <button class="cta-btn">Subscribe</button>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p class="footer-content">© 2025 Hogwarts Legacy. All rights reserved. This is a fan-made website for educational purposes.</p>
+    </footer>
+  </div>
+
+  <script>
+    // Mobile menu toggle
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.style.display = mobileMenu.style.display === 'block' ? 'none' : 'block';
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (event) => {
+      if (!menuBtn.contains(event.target) && !mobileMenu.contains(event.target)) {
+        mobileMenu.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>
