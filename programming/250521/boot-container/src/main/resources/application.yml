@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: boot-container
+  profiles:
+    active: dev
