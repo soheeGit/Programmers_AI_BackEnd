@@ -1,0 +1,29 @@
+services:
+  # spring boot
+  app:
+    build: .
+    ports:
+      - "${APP_PORT}:8080"
+    env_file:
+      - ".env"
+    networks:
+      - "app-network"
+    depends_on:
+      - postgresql
+  # Postgres
+  postgresql:
+    image: "postgres:16-alpine"
+    env_file:
+      - ".env"
+    ports:
+      - "${DB_PORT}:5432"
+    volumes:
+      - "db-data:/var/lib/postgresql/data"
+    networks:
+      - "app-network"
+
+volumes:
+  db-data:
+
+networks:
+  app-network:

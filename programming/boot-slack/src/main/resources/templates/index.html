@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자유채널 익명 발송기</title>
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+<div class="container text-center">
+    <div class="card shadow rounded p-4" style="max-width: 500px; margin: auto;">
+        <h2 class="mb-4">짱짱이가 보내주는 웹훅</h2>
+        <form id="slack">
+            <div class="mb-3 text-start">
+                <label for="slack-text" class="form-label">메시지 내용</label>
+                <input type="text" class="form-control" id="slack-text" placeholder="슬랙에 보낼 내용을 입력하세요" required>
+            </div>
+            <button class="btn btn-primary w-100">발송하기 🚀</button>
+        </form>
+        <div id="alertBox" class="alert mt-3 d-none" role="alert"></div>
+    </div>
+</div>
+
+<!-- JS -->
+<script>
+    const slackForm = document.querySelector('#slack');
+    const slackText = document.querySelector('#slack-text');
+    const alertBox = document.querySelector('#alertBox');
+
+    slackForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const text = slackText.value.trim();
+        if (!text) return;
+
+        try {
+            const res = await fetch('/slack', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({text})
+            });
+
+            if (res.ok) {
+                alertBox.textContent = '✅ 슬랙 메시지가 성공적으로 발송되었습니다!';
+                alertBox.className = 'alert alert-success mt-3';
+                slackText.value = '';
+            } else {
+                alertBox.textContent = '❌ 메시지 전송 실패!';
+                alertBox.className = 'alert alert-danger mt-3';
+            }
+        } catch (err) {
+            alertBox.textContent = '⚠️ 네트워크 오류 또는 서버 문제 발생';
+            alertBox.className = 'alert alert-warning mt-3';
+        }
+        alertBox.classList.remove('d-none');
+    });
+</script>
+</body>
+</html>

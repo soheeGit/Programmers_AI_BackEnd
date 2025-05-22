@@ -1,0 +1,3 @@
+google:
+  gemini:
+    api-key: ${GOOGLE_GEMINI_API_KEY}
