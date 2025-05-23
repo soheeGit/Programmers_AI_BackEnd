@@ -1,0 +1,11 @@
+global:
+  scrape_interval: 15s      # 기본 수집 간격
+  evaluation_interval: 15s  # 규칙 평가 간격
+
+scrape_configs:
+  - job_name: 'spring-boot-monitoring'
+    metrics_path: '/actuator/prometheus'
+    scrape_interval: 10s    # 이 job의 수집 간격
+    static_configs:
+      - targets: ['host.docker.internal:8080']
+    scrape_timeout: 5s

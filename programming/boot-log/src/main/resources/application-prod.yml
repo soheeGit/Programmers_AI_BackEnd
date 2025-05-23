@@ -1,0 +1,10 @@
+server:
+  port: 8080
+logging:
+  level:
+    root: info
+    org:
+      example:
+        bootlog:
+          controller: error
+          service: error

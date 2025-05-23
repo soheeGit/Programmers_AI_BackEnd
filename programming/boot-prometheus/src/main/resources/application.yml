@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: boot-prometheus
+management:
+  endpoints:
+    web:
+      exposure:
+        include: prometheus,health,metrics
+  endpoint:
+    prometheus:
+      access: unrestricted
+  prometheus:
+    metrics:
+      export:
+        enabled: true
