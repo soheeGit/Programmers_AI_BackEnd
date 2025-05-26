@@ -1,0 +1,17 @@
+global:
+  scrape_interval: 5s
+
+rule_files:
+  - "alert.rules.yml"
+
+scrape_configs:
+  - job_name: 'spring-local'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['host.docker.internal:8080']
+      # - targets: ['app:8080']
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: ['host.docker.internal:9093']

@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: boot-prom-review
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: prometheus
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+
+server:
+  port: 8080
