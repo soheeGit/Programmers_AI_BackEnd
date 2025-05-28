@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: boot-cloud-step2
+  profiles:
+    active: dev

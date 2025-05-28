@@ -1,0 +1,27 @@
+services:
+  app:
+    build: .
+    ports:
+      - "80:8080"
+    networks:
+      - cloud
+    env_file:
+      - .env
+    depends_on:
+      - db
+  db:
+    image: mysql:8.0
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - cloud
+    env_file:
+      - .env
+
+volumes:
+  mysql_data:
+
+networks:
+  cloud:
