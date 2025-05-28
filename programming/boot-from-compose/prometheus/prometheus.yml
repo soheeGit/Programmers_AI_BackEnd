@@ -1,0 +1,19 @@
+global:
+  scrape_interval: 5s
+
+scrape_configs:
+  - job_name: 'spring-boot-app'
+    static_configs:
+#      - targets: ['host.docker.internal:8080'] # intellj로 실행 중이거나 별도 네트워크 없이 직접 연결하겠다
+      - targets: ['app:8080'] # 네트워크에서 컨테이너 이름으로 연결하겠다
+    metrics_path: '/actuator/prometheus'
+
+# alert manager
+
+rule_files:
+  - "alert.rules.yml"
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: ['alertmanager:9093']

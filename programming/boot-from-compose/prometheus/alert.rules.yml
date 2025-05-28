@@ -1,0 +1,11 @@
+groups:
+  - name: give_me_money
+    rules:
+      - alert: give_me_money
+        expr: rate(give_me_money_total[10s]) > 0.1
+        for: 10s
+        labels:
+          severity: warning
+        annotations:
+          summary: "give_me_money"
+          description: "돈 주세요"

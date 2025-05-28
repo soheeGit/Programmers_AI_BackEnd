@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: boot-cloud-step1
+  profiles:
+    active: dev
+server:
+  port: 8080

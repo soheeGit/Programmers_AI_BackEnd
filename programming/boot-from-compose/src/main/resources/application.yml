@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: boot-from-compose
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,prometheus"
+  prometheus:
+    metrics:
+      export:
+        enabled: true

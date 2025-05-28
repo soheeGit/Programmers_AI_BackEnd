@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>애니 좋아하세요?</title>
+  <style>
+    @import url(https://fonts.googleapis.com/css2?family=Lato&display=swap);
+    @import url(https://fonts.googleapis.com/css2?family=Open+Sans&display=swap);
+    @import url(https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200);
+  </style>
+</head>
+<body>
+<div id="webcrumbs">
+  <div class="w-[1440px] p-6 bg-gradient-to-br from-indigo-950 via-purple-900 to-pink-900 text-white">
+    <header class="flex flex-col lg:flex-row justify-between items-center py-6">
+      <div class="flex items-center mb-4 lg:mb-0">
+        <span class="material-symbols-outlined text-4xl text-pink-400 mr-2">auto_awesome</span>
+        <h1
+                class="text-3xl font-bold bg-gradient-to-r from-pink-400 to-indigo-300 bg-clip-text text-transparent"
+        >
+          AnimeVerse
+        </h1>
+      </div>
+      <nav class="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-8">
+        <a href="#" class="hover:text-pink-400 transition-colors duration-300 font-medium">Home</a>
+        <a href="#" class="hover:text-pink-400 transition-colors duration-300 font-medium">Explore</a>
+        <a href="#" class="hover:text-pink-400 transition-colors duration-300 font-medium">Genres</a>
+        <a href="#" class="hover:text-pink-400 transition-colors duration-300 font-medium">Seasons</a>
+        <a href="#" class="hover:text-pink-400 transition-colors duration-300 font-medium">News</a>
+        <button
+                class="bg-pink-500 hover:bg-pink-600 px-6 py-2 rounded-full font-semibold transition-all duration-300 transform hover:scale-105"
+        >
+          Sign In
+        </button>
+      </nav>
+    </header>
+    <section class="py-12 md:py-20">
+      <div class="flex flex-col-reverse lg:flex-row items-center justify-between">
+        <div class="lg:w-1/2 mt-8 lg:mt-0">
+          <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+            Discover Your Next <span class="text-pink-400">Anime</span> Adventure
+          </h2>
+          <p class="text-lg md:text-xl text-gray-200 mb-8">
+            Explore thousands of anime titles, from classic favorites to the latest releases. Join
+            our community of passionate fans.
+          </p>
+          <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+            <button
+                    class="bg-pink-500 hover:bg-pink-600 px-8 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 flex items-center justify-center"
+            >
+              <span class="material-symbols-outlined mr-2">play_arrow</span> Watch Now
+            </button>
+            <button
+                    class="bg-transparent border-2 border-indigo-400 hover:bg-indigo-400/20 px-8 py-3 rounded-full font-semibold transition-all duration-300"
+            >
+              Explore Catalog
+            </button>
+          </div>
+        </div>
+        <div class="lg:w-1/2 relative">
+          <img
+                  src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=600"
+                  alt="Anime characters collage"
+                  class="rounded-xl shadow-2xl shadow-indigo-700/30 w-full max-w-md mx-auto transform hover:scale-[1.02] transition-all duration-500"
+                  keywords="anime, characters, anime art, japanese animation"
+          />
+          <div
+                  class="absolute -bottom-5 -right-5 md:bottom-10 md:-right-10 bg-gradient-to-br from-indigo-600 to-purple-600 p-4 rounded-lg shadow-lg transform rotate-3 hover:rotate-0 transition-all duration-300"
+          >
+            <p class="font-bold">New Releases</p>
+            <p class="text-sm">Updated weekly</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="py-16">
+      <h2 class="text-3xl font-bold text-center mb-12">Trending This Season</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div
+                class="bg-gradient-to-br from-purple-900/40 to-indigo-900/40 backdrop-blur-sm rounded-xl overflow-hidden shadow-lg transform hover:scale-[1.03] transition-all duration-300 hover:shadow-pink-500/20 group"
+        >
+          <div class="relative">
+            <img
+                    src="https://images.unsplash.com/photo-1586277009-5f3ef105dda8?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=400"
+                    alt="Trending anime 1"
+                    class="w-full h-48 object-cover"
+                    keywords="anime scene, manga, animation still, popular anime"
+            />
+            <div
+                    class="absolute top-2 right-2 bg-pink-500 text-xs font-bold px-2 py-1 rounded-full"
+            >
+              9.5/10
+            </div>
+            <div
+                    class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center p-4"
+            >
+              <button
+                      class="bg-pink-500 hover:bg-pink-600 px-4 py-2 rounded-full font-medium text-sm transition-all duration-300 transform hover:scale-105 mb-4"
+              >
+                <span class="material-symbols-outlined text-sm mr-1">play_arrow</span> Watch
+              </button>
+            </div>
+          </div>
+          <div class="p-4">
+            <h3 class="font-bold text-lg mb-2">Cosmic Samurai 1</h3>
+            <div class="flex justify-between text-sm text-gray-300 mb-3">
+              <span>Fantasy</span> <span>Episodes: 12</span>
+            </div>
+            <p class="text-sm text-gray-300 line-clamp-2">
+              Follow the journey of a legendary warrior as they battle against supernatural forces
+              to protect their world.
+            </p>
+          </div>
+        </div>
+        <div
+                class="bg-gradient-to-br from-purple-900/40 to-indigo-900/40 backdrop-blur-sm rounded-xl overflow-hidden shadow-lg transform hover:scale-[1.03] transition-all duration-300 hover:shadow-pink-500/20 group"
+        >
+          <div class="relative">
+            <img
+                    src="https://images.unsplash.com/photo-15862770010-5f3ef105dda8?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=400"
+                    alt="Trending anime 2"
+                    class="w-full h-48 object-cover"
+                    keywords="anime scene, manga, animation still, popular anime"
+            />
+            <div
+                    class="absolute top-2 right-2 bg-pink-500 text-xs font-bold px-2 py-1 rounded-full"
+            >
+              9.6/10
+            </div>
+            <div
+                    class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center p-4"
+            >
+              <button
+                      class="bg-pink-500 hover:bg-pink-600 px-4 py-2 rounded-full font-medium text-sm transition-all duration-300 transform hover:scale-105 mb-4"
+              >
+                <span class="material-symbols-outlined text-sm mr-1">play_arrow</span> Watch
+              </button>
+            </div>
+          </div>
+          <div class="p-4">
+            <h3 class="font-bold text-lg mb-2">Cosmic Samurai 2</h3>
+            <div class="flex justify-between text-sm text-gray-300 mb-3">
+              <span>Fantasy</span> <span>Episodes: 13</span>
+            </div>
+            <p class="text-sm text-gray-300 line-clamp-2">
+              Follow the journey of a legendary warrior as they battle against supernatural forces
+              to protect their world.
+            </p>
+          </div>
+        </div>
+        <div
+                class="bg-gradient-to-br from-purple-900/40 to-indigo-900/40 backdrop-blur-sm rounded-xl overflow-hidden shadow-lg transform hover:scale-[1.03] transition-all duration-300 hover:shadow-pink-500/20 group"
+        >
+          <div class="relative">
+            <img
+                    src="https://images.unsplash.com/photo-15862770011-5f3ef105dda8?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=400"
+                    alt="Trending anime 3"
+                    class="w-full h-48 object-cover"
+                    keywords="anime scene, manga, animation still, popular anime"
+            />
+            <div
+                    class="absolute top-2 right-2 bg-pink-500 text-xs font-bold px-2 py-1 rounded-full"
+            >
+              9.7/10
+            </div>
+            <div
+                    class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center p-4"
+            >
+              <button
+                      class="bg-pink-500 hover:bg-pink-600 px-4 py-2 rounded-full font-medium text-sm transition-all duration-300 transform hover:scale-105 mb-4"
+              >
+                <span class="material-symbols-outlined text-sm mr-1">play_arrow</span> Watch
+              </button>
+            </div>
+          </div>
+          <div class="p-4">
+            <h3 class="font-bold text-lg mb-2">Cosmic Samurai 3</h3>
+            <div class="flex justify-between text-sm text-gray-300 mb-3">
+              <span>Fantasy</span> <span>Episodes: 14</span>
+            </div>
+            <p class="text-sm text-gray-300 line-clamp-2">
+              Follow the journey of a legendary warrior as they battle against supernatural forces
+              to protect their world.
+            </p>
+          </div>
+        </div>
+        <div
+                class="bg-gradient-to-br from-purple-900/40 to-indigo-900/40 backdrop-blur-sm rounded-xl overflow-hidden shadow-lg transform hover:scale-[1.03] transition-all duration-300 hover:shadow-pink-500/20 group"
+        >
+          <div class="relative">
+            <img
+                    src="https://images.unsplash.com/photo-15862770012-5f3ef105dda8?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=400"
+                    alt="Trending anime 4"
+                    class="w-full h-48 object-cover"
+                    keywords="anime scene, manga, animation still, popular anime"
+            />
+            <div
+                    class="absolute top-2 right-2 bg-pink-500 text-xs font-bold px-2 py-1 rounded-full"
+            >
+              9.8/10
+            </div>
+            <div
+                    class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center p-4"
+            >
+              <button
+                      class="bg-pink-500 hover:bg-pink-600 px-4 py-2 rounded-full font-medium text-sm transition-all duration-300 transform hover:scale-105 mb-4"
+              >
+                <span class="material-symbols-outlined text-sm mr-1">play_arrow</span> Watch
+              </button>
+            </div>
+          </div>
+          <div class="p-4">
+            <h3 class="font-bold text-lg mb-2">Cosmic Samurai 4</h3>
+            <div class="flex justify-between text-sm text-gray-300 mb-3">
+              <span>Fantasy</span> <span>Episodes: 15</span>
+            </div>
+            <p class="text-sm text-gray-300 line-clamp-2">
+              Follow the journey of a legendary warrior as they battle against supernatural forces
+              to protect their world.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="text-center mt-10">
+        <button
+                class="border-2 border-indigo-400 hover:bg-indigo-400/20 px-6 py-2 rounded-full font-semibold transition-all duration-300"
+        >
+          View All Trending
+        </button>
+      </div>
+    </section>
+    <section class="py-16 relative overflow-hidden">
+      <div class="absolute -right-24 -top-24 w-64 h-64 bg-pink-500/20 rounded-full blur-3xl"></div>
+      <div class="absolute -left-24 -bottom-24 w-64 h-64 bg-indigo-500/20 rounded-full blur-3xl"></div>
+      <div class="relative z-10">
+        <h2 class="text-3xl font-bold text-center mb-4">Upcoming Releases</h2>
+        <p class="text-center text-gray-300 max-w-2xl mx-auto mb-12">
+          Stay ahead with our curated list of the most anticipated anime coming this season.
+        </p>
+        <div class="flex flex-col md:flex-row space-y-6 md:space-y-0 md:space-x-6">
+          <div
+                  class="md:w-1/2 bg-gradient-to-br from-indigo-900/40 to-purple-900/40 backdrop-blur-sm p-6 rounded-xl shadow-lg hover:shadow-pink-500/20 transition-all duration-300"
+          >
+            <div class="flex items-center mb-4">
+              <span class="material-symbols-outlined text-pink-400 mr-2">event_upcoming</span>
+              <h3 class="font-bold text-xl">Next Week</h3>
+            </div>
+            <div class="space-y-4">
+              <div
+                      class="flex items-center p-3 hover:bg-white/5 rounded-lg transition-all duration-200"
+              >
+                <img
+                        src="https://images.unsplash.com/photo-1586287001-5a3ef105ae18?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=100"
+                        alt="Upcoming anime 1"
+                        class="w-12 h-12 object-cover rounded-md mr-4"
+                        keywords="anime preview, upcoming anime, new season anime"
+                />
+                <div class="flex-1">
+                  <h4 class="font-medium">Dragon Academy 1</h4>
+                  <p class="text-xs text-gray-300">May 11, 2023</p>
+                </div>
+                <button class="text-pink-400 hover:text-pink-300 transition-colors">
+                  <span class="material-symbols-outlined">notifications_active</span>
+                </button>
+              </div>
+              <div
+                      class="flex items-center p-3 hover:bg-white/5 rounded-lg transition-all duration-200"
+              >
+                <img
+                        src="https://images.unsplash.com/photo-1586287002-5a3ef105ae28?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=100"
+                        alt="Upcoming anime 2"
+                        class="w-12 h-12 object-cover rounded-md mr-4"
+                        keywords="anime preview, upcoming anime, new season anime"
+                />
+                <div class="flex-1">
+                  <h4 class="font-medium">Dragon Academy 2</h4>
+                  <p class="text-xs text-gray-300">May 12, 2023</p>
+                </div>
+                <button class="text-pink-400 hover:text-pink-300 transition-colors">
+                  <span class="material-symbols-outlined">notifications_active</span>
+                </button>
+              </div>
+              <div
+                      class="flex items-center p-3 hover:bg-white/5 rounded-lg transition-all duration-200"
+              >
+                <img
+                        src="https://images.unsplash.com/photo-1586287003-5a3ef105ae38?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=100"
+                        alt="Upcoming anime 3"
+                        class="w-12 h-12 object-cover rounded-md mr-4"
+                        keywords="anime preview, upcoming anime, new season anime"
+                />
+                <div class="flex-1">
+                  <h4 class="font-medium">Dragon Academy 3</h4>
+                  <p class="text-xs text-gray-300">May 13, 2023</p>
+                </div>
+                <button class="text-pink-400 hover:text-pink-300 transition-colors">
+                  <span class="material-symbols-outlined">notifications_active</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div
+                  class="md:w-1/2 bg-gradient-to-br from-purple-900/40 to-pink-900/40 backdrop-blur-sm p-6 rounded-xl shadow-lg hover:shadow-indigo-500/20 transition-all duration-300"
+          >
+            <div class="flex items-center mb-4">
+              <span class="material-symbols-outlined text-indigo-400 mr-2">calendar_month</span>
+              <h3 class="font-bold text-xl">This Season</h3>
+            </div>
+            <div class="space-y-4">
+              <div
+                      class="flex items-center p-3 hover:bg-white/5 rounded-lg transition-all duration-200"
+              >
+                <img
+                        src="https://images.unsplash.com/photo-1586225005-1c3ef105da1?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=100"
+                        alt="Season anime 1"
+                        class="w-12 h-12 object-cover rounded-md mr-4"
+                        keywords="seasonal anime, anime release, new anime"
+                />
+                <div class="flex-1">
+                  <h4 class="font-medium">Celestial Kingdoms 1</h4>
+                  <p class="text-xs text-gray-300">June 10, 2023</p>
+                </div>
+                <div class="text-xs bg-indigo-600 px-2 py-1 rounded-full">Romance</div>
+              </div>
+              <div
+                      class="flex items-center p-3 hover:bg-white/5 rounded-lg transition-all duration-200"
+              >
+                <img
+                        src="https://images.unsplash.com/photo-1586225006-1c3ef105da2?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=100"
+                        alt="Season anime 2"
+                        class="w-12 h-12 object-cover rounded-md mr-4"
+                        keywords="seasonal anime, anime release, new anime"
+                />
+                <div class="flex-1">
+                  <h4 class="font-medium">Celestial Kingdoms 2</h4>
+                  <p class="text-xs text-gray-300">June 15, 2023</p>
+                </div>
+                <div class="text-xs bg-indigo-600 px-2 py-1 rounded-full">Action</div>
+              </div>
+              <div
+                      class="flex items-center p-3 hover:bg-white/5 rounded-lg transition-all duration-200"
+              >
+                <img
+                        src="https://images.unsplash.com/photo-1586225007-1c3ef105da3?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=100"
+                        alt="Season anime 3"
+                        class="w-12 h-12 object-cover rounded-md mr-4"
+                        keywords="seasonal anime, anime release, new anime"
+                />
+                <div class="flex-1">
+                  <h4 class="font-medium">Celestial Kingdoms 3</h4>
+                  <p class="text-xs text-gray-300">June 20, 2023</p>
+                </div>
+                <div class="text-xs bg-indigo-600 px-2 py-1 rounded-full">Mystery</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="py-16 bg-gradient-to-r from-pink-900/50 to-indigo-900/50 rounded-2xl p-8 my-8">
+      <div class="flex flex-col lg:flex-row items-center">
+        <div class="lg:w-1/2 mb-8 lg:mb-0">
+          <h2 class="text-3xl font-bold mb-6">Join Our Anime Community</h2>
+          <p class="text-gray-200 mb-6">
+            Connect with fellow anime fans, discuss your favorite series, and never miss a new
+            release.
+          </p>
+          <ul class="space-y-4 mb-8">
+            <li class="flex items-center">
+              <span class="material-symbols-outlined text-pink-400 mr-2">check_circle</span>
+              Personalized recommendations
+            </li>
+            <li class="flex items-center">
+              <span class="material-symbols-outlined text-pink-400 mr-2">check_circle</span>
+              Episode tracking
+            </li>
+            <li class="flex items-center">
+              <span class="material-symbols-outlined text-pink-400 mr-2">check_circle</span>
+              Exclusive content
+            </li>
+            <li class="flex items-center">
+              <span class="material-symbols-outlined text-pink-400 mr-2">check_circle</span> Early
+              access to new releases
+            </li>
+          </ul>
+          <button
+                  class="bg-indigo-500 hover:bg-indigo-600 px-8 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105"
+          >
+            Join Now - It&#x27;s Free!
+          </button>
+        </div>
+        <div class="lg:w-1/2 lg:pl-12">
+          <div
+                  class="bg-gradient-to-br from-indigo-900/60 to-purple-900/60 backdrop-blur-sm p-6 rounded-xl shadow-lg"
+          >
+            <h3 class="font-bold text-xl mb-4 text-center">Subscribe to Updates</h3>
+            <form class="space-y-4">
+              <div>
+                <input
+                        type="text"
+                        placeholder="Your Name"
+                        class="w-full px-4 py-3 rounded-lg bg-white/10 border border-indigo-400/30 focus:outline-none focus:border-pink-400 transition-colors"
+                />
+              </div>
+              <div>
+                <input
+                        type="email"
+                        placeholder="Your Email"
+                        class="w-full px-4 py-3 rounded-lg bg-white/10 border border-indigo-400/30 focus:outline-none focus:border-pink-400 transition-colors"
+                />
+              </div>
+              <div>
+                <select
+                        class="w-full px-4 py-3 rounded-lg bg-white/10 border border-indigo-400/30 focus:outline-none focus:border-pink-400 transition-colors appearance-none"
+                >
+                  <option value="">Favorite Genre</option>
+                  <option value="action">Action</option>
+                  <option value="romance">Romance</option>
+                  <option value="fantasy">Fantasy</option>
+                  <option value="sci-fi">Sci-Fi</option>
+                  <option value="slice-of-life">Slice of Life</option>
+                </select>
+              </div>
+              <button
+                      type="submit"
+                      class="w-full bg-gradient-to-r from-pink-500 to-indigo-500 hover:from-pink-600 hover:to-indigo-600 px-6 py-3 rounded-lg font-semibold transition-all duration-300"
+              >
+                Subscribe
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+    <footer class="pt-16 pb-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+        <div>
+          <div class="flex items-center mb-4">
+            <span class="material-symbols-outlined text-3xl text-pink-400 mr-2">auto_awesome</span>
+            <h3 class="text-2xl font-bold">AnimeVerse</h3>
+          </div>
+          <p class="text-gray-300 mb-4">
+            Your gateway to the world of anime. Discover, watch, and connect.
+          </p>
+          <div class="flex space-x-4">
+            <a
+                    href="#"
+                    class="w-10 h-10 rounded-full bg-indigo-800/50 flex items-center justify-center hover:bg-pink-500 transition-colors duration-300"
+            >
+              <i class="fa-brands fa-twitter"></i>
+            </a>
+            <a
+                    href="#"
+                    class="w-10 h-10 rounded-full bg-indigo-800/50 flex items-center justify-center hover:bg-pink-500 transition-colors duration-300"
+            >
+              <i class="fa-brands fa-instagram"></i>
+            </a>
+            <a
+                    href="#"
+                    class="w-10 h-10 rounded-full bg-indigo-800/50 flex items-center justify-center hover:bg-pink-500 transition-colors duration-300"
+            >
+              <i class="fa-brands fa-discord"></i>
+            </a>
+            <a
+                    href="#"
+                    class="w-10 h-10 rounded-full bg-indigo-800/50 flex items-center justify-center hover:bg-pink-500 transition-colors duration-300"
+            >
+              <i class="fa-brands fa-youtube"></i>
+            </a>
+          </div>
+        </div>
+        <div>
+          <h3 class="font-bold text-lg mb-4">Quick Links</h3>
+          <ul class="space-y-2">
+            <li>
+              <a href="#" class="text-gray-300 hover:text-pink-400 transition-colors duration-200"
+              >Home</a
+              >
+            </li>
+            <li>
+              <a href="#" class="text-gray-300 hover:text-pink-400 transition-colors duration-200"
+              >Explore</a
+              >
+            </li>
+            <li>
+              <a href="#" class="text-gray-300 hover:text-pink-400 transition-colors duration-200"
+              >Top Rated</a
+              >
+            </li>
+            <li>
+              <a href="#" class="text-gray-300 hover:text-pink-400 transition-colors duration-200"
+              >New Releases</a
+              >
+            </li>
+            <li>
+              <a href="#" class="text-gray-300 hover:text-pink-400 transition-colors duration-200"
+              >Genres</a
+              >
+            </li>
+            <li>
+              <a href="#" class="text-gray-300 hover:text-pink-400 transition-colors duration-200"
+              >Studios</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="font-bold text-lg mb-4">Categories</h3>
+          <ul class="space-y-2">
+            <li>
+              <a href="#" class="text-gray-300 hover:text-pink-400 transition-colors duration-200"
+              >Action</a
+              >
+            </li>
+            <li>
+              <a href="#" class="text-gray-300 hover:text-pink-400 transition-colors duration-200"
+              >Romance</a
+              >
+            </li>
+            <li>
+              <a href="#" class="text-gray-300 hover:text-pink-400 transition-colors duration-200"
+              >Comedy</a
+              >
+            </li>
+            <li>
+              <a href="#" class="text-gray-300 hover:text-pink-400 transition-colors duration-200"
+              >Fantasy</a
+              >
+            </li>
+            <li>
+              <a href="#" class="text-gray-300 hover:text-pink-400 transition-colors duration-200"
+              >Horror</a
+              >
+            </li>
+            <li>
+              <a href="#" class="text-gray-300 hover:text-pink-400 transition-colors duration-200"
+              >Slice of Life</a
+              >
+            </li>
+            <li>
+              <a href="#" class="text-gray-300 hover:text-pink-400 transition-colors duration-200"
+              >Sci-Fi</a
+              >
+            </li>
+            <li>
+              <a href="#" class="text-gray-300 hover:text-pink-400 transition-colors duration-200"
+              >Sports</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="font-bold text-lg mb-4">Support</h3>
+          <ul class="space-y-2">
+            <li>
+              <a href="#" class="text-gray-300 hover:text-pink-400 transition-colors duration-200"
+              >Help Center</a
+              >
+            </li>
+            <li>
+              <a href="#" class="text-gray-300 hover:text-pink-400 transition-colors duration-200"
+              >Contact Us</a
+              >
+            </li>
+            <li>
+              <a href="#" class="text-gray-300 hover:text-pink-400 transition-colors duration-200"
+              >FAQ</a
+              >
+            </li>
+            <li>
+              <a href="#" class="text-gray-300 hover:text-pink-400 transition-colors duration-200"
+              >Terms of Service</a
+              >
+            </li>
+            <li>
+              <a href="#" class="text-gray-300 hover:text-pink-400 transition-colors duration-200"
+              >Privacy Policy</a
+              >
+            </li>
+            <li>
+              <a href="#" class="text-gray-300 hover:text-pink-400 transition-colors duration-200"
+              >Cookie Policy</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+  </div>
+</div>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    content: ["./src/**/*.{html,js}"],
+    theme: {
+      name: "Bluewave",
+      fontFamily: {
+        sans: [
+          "Open Sans",
+          "ui-sans-serif",
+          "system-ui",
+          "sans-serif",
+          '"Apple Color Emoji"',
+          '"Segoe UI Emoji"',
+          '"Segoe UI Symbol"',
+          '"Noto Color Emoji"'
+        ]
+      },
+      extend: {
+        fontFamily: {
+          title: [
+            "Lato",
+            "ui-sans-serif",
+            "system-ui",
+            "sans-serif",
+            '"Apple Color Emoji"',
+            '"Segoe UI Emoji"',
+            '"Segoe UI Symbol"',
+            '"Noto Color Emoji"'
+          ],
+          body: [
+            "Open Sans",
+            "ui-sans-serif",
+            "system-ui",
+            "sans-serif",
+            '"Apple Color Emoji"',
+            '"Segoe UI Emoji"',
+            '"Segoe UI Symbol"',
+            '"Noto Color Emoji"'
+          ]
+        },
+        colors: {
+          neutral: {
+            50: "#f7f7f7",
+            100: "#eeeeee",
+            200: "#e0e0e0",
+            300: "#cacaca",
+            400: "#b1b1b1",
+            500: "#999999",
+            600: "#7f7f7f",
+            700: "#676767",
+            800: "#545454",
+            900: "#464646",
+            950: "#282828"
+          },
+          primary: {
+            50: "#f3f1ff",
+            100: "#e9e5ff",
+            200: "#d5cfff",
+            300: "#b7a9ff",
+            400: "#9478ff",
+            500: "#7341ff",
+            600: "#631bff",
+            700: "#611bf8",
+            800: "#4607d0",
+            900: "#3c08aa",
+            950: "#220174",
+            DEFAULT: "#611bf8"
+          }
+        }
+      },
+      fontSize: {
+        xs: ["12px", {lineHeight: "19.200000000000003px"}],
+        sm: ["14px", {lineHeight: "21px"}],
+        base: ["16px", {lineHeight: "25.6px"}],
+        lg: ["18px", {lineHeight: "27px"}],
+        xl: ["20px", {lineHeight: "28px"}],
+        "2xl": ["24px", {lineHeight: "31.200000000000003px"}],
+        "3xl": ["30px", {lineHeight: "36px"}],
+        "4xl": ["36px", {lineHeight: "41.4px"}],
+        "5xl": ["48px", {lineHeight: "52.800000000000004px"}],
+        "6xl": ["60px", {lineHeight: "66px"}],
+        "7xl": ["72px", {lineHeight: "75.60000000000001px"}],
+        "8xl": ["96px", {lineHeight: "100.80000000000001px"}],
+        "9xl": ["128px", {lineHeight: "134.4px"}]
+      },
+      borderRadius: {
+        none: "0px",
+        sm: "6px",
+        DEFAULT: "12px",
+        md: "18px",
+        lg: "24px",
+        xl: "36px",
+        "2xl": "48px",
+        "3xl": "72px",
+        full: "9999px"
+      },
+      spacing: {
+        0: "0px",
+        1: "4px",
+        2: "8px",
+        3: "12px",
+        4: "16px",
+        5: "20px",
+        6: "24px",
+        7: "28px",
+        8: "32px",
+        9: "36px",
+        10: "40px",
+        11: "44px",
+        12: "48px",
+        14: "56px",
+        16: "64px",
+        20: "80px",
+        24: "96px",
+        28: "112px",
+        32: "128px",
+        36: "144px",
+        40: "160px",
+        44: "176px",
+        48: "192px",
+        52: "208px",
+        56: "224px",
+        60: "240px",
+        64: "256px",
+        72: "288px",
+        80: "320px",
+        96: "384px",
+        px: "1px",
+        0.5: "2px",
+        1.5: "6px",
+        2.5: "10px",
+        3.5: "14px"
+      }
+    },
+    plugins: [],
+    important: "#webcrumbs"
+  }
+</script>
+</body>
+</html>

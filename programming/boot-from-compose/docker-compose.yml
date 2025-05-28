@@ -1,0 +1,36 @@
+services:
+  app:
+    build: . # Dockerfile
+    ports:
+      - "8080:8080" # 외부로 Open
+    networks:
+      - prom
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus/alert.rules.yml:/etc/prometheus/alert.rules.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - prom
+
+  alertmanager:
+    image: prom/alertmanager:latest
+    volumes:
+      - ./prometheus/alertmanager.yml:/etc/alertmanager/alertmanager.yml
+    ports:
+      - "9093:9093"
+    networks:
+      - prom
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    networks:
+      - prom
+
+networks:
+  prom:
