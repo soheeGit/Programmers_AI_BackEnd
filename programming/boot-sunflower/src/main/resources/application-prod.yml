@@ -1,0 +1,24 @@
+server:
+  port: 8080 # 로컬에서 신경써야하는 이슈는? -> 포트 겹침
+  baseurl: ${BASEURL}
+spring:
+  jpa:
+    hibernate:
+      # ddl-auto: create # 배포 시는 none 또는 validate 추천
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect # MySQL, MariaDB
+        # dialect: org.hibernate.dialect.PostgreSQLDialect # PostgreSQL
+        show_sql: true
+        format_sql: true
+  # 데이터소스
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver # MySQL, MariaDB
+    # driver-class-name: org.mariadb.jdbc.Driver # MariaDB
+    # driver-class-name: org.postgresql.Driver # PostgreSQL
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+gemini:
+  key: ${GEMINI_KEY}
