@@ -1,64 +1,136 @@
 <!doctype html>
-<!-- <html lang="ko" xmlns:th="http://www.thymeleaf.org"> -->
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>그거 잘됐다!</title>
+    <title>진격의 거인 사고 변환기</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css"
           rel="stylesheet"
           integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT"
           crossorigin="anonymous">
-    <!-- <link rel="stylesheet" href="/style.css"> -->
     <link rel="stylesheet" href="./style.css">
 </head>
-<body class="bg-light">
-<div class="container py-5">
-    <h1 class="mb-4">그거 잘 됐다! 원영적 사고 생성기</h1>
+<body>
+<div class="container py-5 mt-4">
+    <h1 class="main-title">⚔️ 진격의 거인 사고 변환기 ⚔️</h1>
 
-    <!-- <form th:action="@{/}" th:object="${promptForm}" method="post" class="mb-5"> -->
-    <form method="post" class="mb-5" id="promptForm">
-        <div class="input-group">
-            <span class="input-group-text">텍스트</span>
-            <!-- <input type="text"
-                   th:field="*{text}"
-                   class="form-control"
-                   placeholder="입력하세요"> -->
-            <input type="text"
-                   class="form-control"
-                   placeholder="입력하세요"
-                   id="promptText">
-            <button type="submit" class="btn btn-primary">생각 바꾸기</button>
+    <div class="text-center mb-4">
+        <h5 style="color: #f5f5dc;">당신의 고민을 진격의 거인 캐릭터의 시각으로 바라보세요</h5>
+    </div>
+
+    <div class="character-grid">
+        <div class="character-card" data-character="eren">
+            <div class="character-name">🔥 에렌 예거</div>
+            <div class="character-description">
+                자유를 향한 강렬한 의지와 적극적인 행동력으로 모든 장벽을 부수고 앞으로 나아가는 사고방식
+            </div>
+            <div class="character-trait">자유 · 의지 · 전진</div>
         </div>
-    </form>
 
-    <div id="promptData" class="card" style="display: none;">
-        <div class="card-body">
-            <h6 class="card-subtitle text-muted mb-3">
-                ID: <span id="promptDataId">1</span>
+        <div class="character-card" data-character="mikasa">
+            <div class="character-name">🗡️ 미카사 아커만</div>
+            <div class="character-description">
+                소중한 것을 지키기 위한 냉철한 판단력과 확고한 신념으로 현실적이고 실용적인 해결책을 제시
+            </div>
+            <div class="character-trait">보호 · 헌신 · 냉정</div>
+        </div>
+
+        <div class="character-card" data-character="armin">
+            <div class="character-name">📚 아르민 알레르토</div>
+            <div class="character-description">
+                깊은 사색과 전략적 사고로 복잡한 문제를 다각도로 분석하여 창의적인 해법을 찾아내는 지혜
+            </div>
+            <div class="character-trait">지략 · 분석 · 창의</div>
+        </div>
+
+        <div class="character-card" data-character="levi">
+            <div class="character-name">⚡ 리바이 아커만</div>
+            <div class="character-description">
+                완벽주의와 효율성을 추구하며 감정보다는 결과에 집중하여 최선의 선택을 하는 현실적 사고
+            </div>
+            <div class="character-trait">완벽 · 효율 · 현실</div>
+        </div>
+
+        <div class="character-card" data-character="zeke">
+            <div class="character-name">🧠 지크 예거</div>
+            <div class="character-description">
+                철학적이고 거시적인 관점에서 문제의 본질을 파악하여 장기적인 해결책을 모색하는 사고방식
+            </div>
+            <div class="character-trait">철학 · 거시적 · 본질</div>
+        </div>
+    </div>
+
+    <div class="input-section">
+        <form th:action="@{/}" th:object="${promptForm}" method="post">
+            <div class="mb-3">
+                <label class="form-label" style="color: #ffd700; font-weight: bold;">
+                    선택된 캐릭터: <span id="selectedCharacter">캐릭터를 선택해주세요</span>
+                </label>
+                <input type="hidden" id="characterInput" th:field="*{character}" />
+            </div>
+
+            <div class="mb-4">
+                <label for="textInput" class="form-label" style="color: #ffd700; font-weight: bold;">
+                    당신의 고민이나 상황을 입력하세요
+                </label>
+                <textarea
+                        id="textInput"
+                        th:field="*{text}"
+                        class="form-control"
+                        rows="4"
+                        placeholder="예: 새로운 도전이 두렵고 망설여집니다..."
+                        required></textarea>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn-transform" id="submitBtn">
+                    🔄 사고 변환하기
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div th:if="${promptData}" class="mt-4" style="background: rgba(139, 69, 19, 0.6); border-radius: 15px; padding: 2rem; border: 2px solid rgba(255, 215, 0, 0.3);">
+        <div style="color: #f5f5dc;">
+            <h6 style="color: #ffd700; margin-bottom: 1rem;">
+                변환 결과 ID: <span th:text="${promptData.id}">1</span>
             </h6>
-            <p class="mb-2">
-                <strong>질문:</strong> <span id="promptDataQuestion"></span>
+            <p class="mb-3">
+                <strong style="color: #ffd700;">캐릭터:</strong>
+                <span th:text="${promptData.characterNames}" style="color: #f5f5dc;"></span>
             </p>
-            <p>
-                <strong>답변:</strong> <span id="promptDataAnswer"></span>
+            <p class="mb-3">
+                <strong style="color: #ffd700;">원본:</strong>
+                <span th:text="${promptData.question}" style="color: #f5f5dc;"></span>
+            </p>
+            <p class="mb-4">
+                <strong style="color: #ffd700;">변환된 사고:</strong>
+                <span th:text="${promptData.answer}" style="color: #f5f5dc; line-height: 1.6;"></span>
             </p>
 
             <div class="mt-4">
-                <label for="shareLink" class="form-label">공유 링크</label>
+                <label for="shareLink" class="form-label" style="color: #ffd700; font-weight: bold;">공유 링크</label>
                 <div class="input-group">
                     <input type="text"
                            id="shareLink"
                            class="form-control"
                            readonly
-                           value=""/>
+                           th:value="|${baseUrl}/history/${promptData.id}|"/>
+                    <button type="button"
+                            class="btn btn-outline-warning"
+                            id="copyBtn">복사</button>
                 </div>
-                <a href=""
-                   id="openLink"
-                   target="_blank"
-                   class="btn btn-sm btn-primary mt-3">
-                    새 창에서 열기
-                </a>
+                <div class="mt-3">
+                    <a th:href="@{/history/{id}(id=${promptData.id})}"
+                       target="_blank"
+                       class="btn btn-sm btn-warning me-2">
+                        새 창에서 열기
+                    </a>
+                    <a href="/"
+                       class="btn btn-sm btn-outline-warning">
+                        다시 하기
+                    </a>
+                </div>
             </div>
         </div>
     </div>

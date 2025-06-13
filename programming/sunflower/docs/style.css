@@ -7,4 +7,144 @@
 
 body {
     font-family: "omyu_pretty", serif;
+    background: linear-gradient(135deg, #2c1810 0%, #8b4513 50%, #cd853f 100%);
+    min-height: 100vh;
+    color: #f5f5dc;
+}
+
+.container {
+    backdrop-filter: blur(10px);
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 20px;
+    border: 2px solid rgba(139, 69, 19, 0.5);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+.main-title {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #ffd700;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
+    margin-bottom: 2rem;
+    background: linear-gradient(90deg, #ffd700, #ffed4e, #ffd700);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.character-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.character-card {
+    background: linear-gradient(145deg, rgba(139, 69, 19, 0.8), rgba(160, 82, 45, 0.6));
+    border: 2px solid #8b4513;
+    border-radius: 15px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.character-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(255, 215, 0, 0.3);
+    border-color: #ffd700;
+}
+
+.character-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.character-card:hover::before {
+    left: 100%;
+}
+
+.character-name {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #ffd700;
+    margin-bottom: 0.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.character-description {
+    font-size: 0.9rem;
+    color: #f5f5dc;
+    margin-bottom: 1rem;
+    line-height: 1.4;
+}
+
+.character-trait {
+    background: rgba(255, 215, 0, 0.2);
+    border: 1px solid #ffd700;
+    border-radius: 20px;
+    padding: 0.3rem 0.8rem;
+    font-size: 0.8rem;
+    color: #ffd700;
+    font-weight: bold;
+}
+
+.input-section {
+    background: rgba(139, 69, 19, 0.6);
+    border-radius: 15px;
+    padding: 2rem;
+    margin-top: 2rem;
+    border: 2px solid rgba(255, 215, 0, 0.3);
+}
+
+.form-control {
+    background: rgba(245, 245, 220, 0.9);
+    border: 2px solid #8b4513;
+    border-radius: 10px;
+    color: #2c1810;
+    font-weight: bold;
+}
+
+.form-control:focus {
+    background: rgba(255, 255, 255, 0.95);
+    border-color: #ffd700;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+}
+
+.btn-transform {
+    background: linear-gradient(145deg, #8b4513, #a0522d);
+    border: 2px solid #ffd700;
+    border-radius: 10px;
+    color: #ffd700;
+    font-weight: bold;
+    padding: 0.75rem 2rem;
+    transition: all 0.3s ease;
+}
+
+.btn-transform:hover {
+    background: linear-gradient(145deg, #a0522d, #cd853f);
+    color: #fff;
+    box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+    transform: translateY(-2px);
+}
+
+.selected {
+    border-color: #ffd700 !important;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+    background: linear-gradient(145deg, rgba(255, 215, 0, 0.3), rgba(160, 82, 45, 0.8));
+}
+
+#selectedCharacter {
+    color: #ffd700;
+    font-weight: bold;
+    margin-left: 0.5rem;
 }
